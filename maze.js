@@ -25,41 +25,42 @@ canvas.Scene.new({
         //trail dot
         trailDot = function (x, y) {
             trail = thisThing.createElement(16,16);
-            trail = drawImage(materials.images.trail);
+            trail.drawImage("trail");
             trail.x = x;
             trail.y = y;
+            return trail;
         }
 
 		//console.log("width: " + _canvas.width + ", height: " + _canvas.height);
 		canvas.Input.keyUp(Input.Up, function(e) {
 			if(thisThing.el.y > 0)
 			{
+                stage.append(new trailDot(thisThing.el.x, thisThing.el.y));
 				thisThing.el.y = Math.max(0,thisThing.el.y-32);
-                stage.append(new trailDot(16, thisThing.el.y-16));
 			}
         });
 
 		canvas.Input.keyUp(Input.Bottom, function(e) {
 			if(thisThing.el.y < _canvas.height)
 			{
+                stage.append(new trailDot(thisThing.el.x, thisThing.el.y));
 				thisThing.el.y = Math.min(_canvas.height-32,thisThing.el.y+32);
-                stage.append(new trailDot(_canvas.height-16, thisThing.el.y+16));
 			}
         });
 
 		canvas.Input.keyUp(Input.Left, function(e) {
 			if(thisThing.el.x > 0)
 			{
+                stage.append(new trailDot(thisThing.el.x, thisThing.el.y));
 				thisThing.el.x = Math.max(0,thisThing.el.x-32);
-                stage.append(new trailDot(16, thisThing.el.x-16));
 			}
         });
 
 		canvas.Input.keyUp(Input.Right, function(e) {
 			if(thisThing.el.x < _canvas.width)
 			{
+                stage.append(new trailDot(thisThing.el.x, thisThing.el.y));
 				thisThing.el.x = Math.min(_canvas.width-32,thisThing.el.x+32);
-                stage.append(new trailDot(_canvas.width-16,thisThing.el.x+16));
 			}
         });
     },
