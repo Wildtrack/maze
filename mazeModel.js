@@ -1,13 +1,14 @@
 var AMaze = AMaze || {};
 AMaze.model = {
 	//Maze constructor
-	var N_CONST = 1, E_CONST = 2, S_CONST = 4, W_CONST = 8,
-	Maze = function(opts){
+	N_CONST:1,E_CONST:2,S_CONST:4,W_CONST:8,
+	DEF_WIDTH:10,DEF_HEIGHT:10,
+	Maze: function(opts){
 		//opts is an object with optional params, width and height
 		//default to 10x10 maze
 
-		this.width = opts.width || 10;
-		this.height = opts.height || 10;
+		this.width = typeof opts !== "undefined"? opts.width || AMaze.model.DEF_WIDTH : AMaze.model.DEF_WIDTH;
+		this.height = typeof opts !== "undefined"? opts.height || AMaze.model.DEF_HEIGHT : AMaze.model.DEF_HEIGHT;
 
 		//default start and end are 0,0 and (width),(height)
 		this.start = [0,0];
@@ -26,37 +27,64 @@ AMaze.model = {
 		//13 & 8 == 8: accessible from w
 
 		this.board = [];
-		for( var y = this.height; y--; )
+		for( var x = this.width; x--; )
 		{
 			this.board.push([]);
-			for( var x = this.width; x--; )
+			for( var y = this.height; y--; )
 			{
-				this.board[y][this.width-x-1] = 0;
+				this.board[this.width-x-1].push(0);
 			}
 		}
-	};
+	}
+};
 
-	//returns cell-type number that gives you the true possible exits
-	//ie: a wall can only be traveled through if cells on both sides agree
-	//that there is an opening there
-	Maze.prototype.acessibleExits = function(x, y) {
-		var acc = 0;
-		if(y-1 >= 0 && (this.board[x][y] & N_CONST == N_CONST) && (this.board[x][y-1] & S_CONST == S_CONST))
-		{
-			acc+=N_CONST;
-		}
-		if(y+1 < this.height && (this.board[x][y] & S_CONST == S_CONST) && (this.board[x][y+1] & N_CONST == N_CONST))
-		{
-			acc+=S_CONST;
-		}
-		if(x-1 >= 0 && (this.board[x][y] & W_CONST == W_CONST) && (this.board[x-1][y] & E_CONST == E_CONST))
-		{
-			acc+=W_CONST;
-		}
-		if(x+1 < this.width && (this.board[x][y] & E_CONST == E_CONST) && (this.board[x+1][y] & W_CONST == W_CONST))
-		{
-			acc+=E_CONST;
-		}
-		return acc;
-	};
+//returns cell-type number that gives you the true possible exits
+//ie: a wall can only be traveled through if cells on both sides agree
+//that there is an opening there
+AMaze.model.Maze.prototype.accessibleExits = function(x, y) {
+	var acc = 0;
+	if(y-1 >= 0 && (this.board[x][y] & AMaze.model.N_CONST == AMaze.model.N_CONST) && (this.board[x][y-1] & AMaze.model.S_CONST == AMaze.model.S_CONST))
+	{
+		acc|=AMaze.model.N_CONST;
+	}
+	if(y+1 < this.height && (this.board[x][y] & AMaze.model.S_CONST == AMaze.model.S_CONST) && (this.board[x][y+1] & AMaze.model.N_CONST == AMaze.model.N_CONST))
+	{
+		acc|=AMaze.model.S_CONST;
+	}
+	if(x-1 >= 0 && (this.board[x][y] & AMaze.model.W_CONST == AMaze.model.W_CONST) && (this.board[x-1][y] & AMaze.model.E_CONST == AMaze.model.E_CONST))
+	{
+		acc|=AMaze.model.W_CONST;
+	}
+	if(x+1 < this.width && (this.board[x][y] & AMaze.model.E_CONST == AMaze.model.E_CONST) && (this.board[x+1][y] & AMaze.model.W_CONST == AMaze.model.W_CONST))
+	{
+		acc|=AMaze.model.E_CONST;
+	}
+	return acc;
+};
+
+//opens the wall(s) in the given cell and the matching wall(s)
+//in the cell(s) in the direction(s) of the now-open wall(s)
+//params: cell x and y and cell-type number indicating direction(s)
+//where wall(s) should be opened
+AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
+	if((dir & AMaze.model.N_CONST == AMaze.model.N_CONST) && y-1 >= 0)
+	{
+		this.board[x][y] |= AMaze.model.N_CONST;
+		this.board[x][y-1] |= AMaze.model.S_CONST;
+	}
+	if((dir & AMaze.model.E_CONST == AMaze.model.E_CONST) && x+1 < this.width)
+	{
+		this.board[x][y] |= AMaze.model.E_CONST;
+		this.board[x+1][y] |= AMaze.model.W_CONST;
+	}
+	if((dir & AMaze.model.S_CONST == AMaze.model.S_CONST) && y+1 < this.height)
+	{
+		this.board[x][y] |= AMaze.model.S_CONST;
+		this.board[x][y+1] |= AMaze.model.N_CONST;
+	}
+	if((dir & AMaze.model.W_CONST == AMaze.model.W_CONST) && x-1 >= 0)
+	{
+		this.board[x][y] |= AMaze.model.W_CONST;
+		this.board[x-1][y] |= AMaze.model.E_CONST;
+	}
 };
