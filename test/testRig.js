@@ -1,10 +1,23 @@
 var TestRig = TestRig || {
-	log:[],
-	assertTrue: function(cond, message) {
+	log:[],passing:true,verboseMode:false,
+	assertTrue: function(cond, message, verbose) {
+		TestRig.passing &= cond;
 		if(!cond) {
 			TestRig.log.push("Assertion failed: " + message);
+		} else {
+			if(verbose || TestRig.verboseMode)
+			{
+				TestRig.log.push("Assertion passed: " + message);
+			}
 		}
 		return cond;
+	},
+	report: function() {
+		return (TestRig.passing? "All tests passed\n":"Tests failed\n") + TestRig.log.join("\n");
+	},
+	reset: function() {
+		TestRig.log = [];
+		TestRig.passing = true;
 	}
 };
 
