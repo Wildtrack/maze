@@ -3,5 +3,6 @@ var TestRig = TestRig || {
 		if(!cond) {
 			console.log("Assertion failed: " + message);
 		}
+		return cond;
 	}
 };
