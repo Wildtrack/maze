@@ -9,7 +9,7 @@ canvas.Scene.new({
     name: "MyScene",
     materials: {
         images: {
-            smile: "./images/smile.png"
+            smile: "images/smile.png"
         }
     },
     ready: function(stage) {

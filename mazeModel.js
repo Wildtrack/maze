@@ -43,19 +43,19 @@ AMaze.model = {
 //that there is an opening there
 AMaze.model.Maze.prototype.accessibleExits = function(x, y) {
 	var acc = 0;
-	if(y-1 >= 0 && ((this.board[x][y] & AMaze.model.N_CONST) == AMaze.model.N_CONST) && ((this.board[x][y-1] & AMaze.model.S_CONST) == AMaze.model.S_CONST))
+	if(y-1 >= 0 && (this.board[x][y] & AMaze.model.N_CONST == AMaze.model.N_CONST) && (this.board[x][y-1] & AMaze.model.S_CONST == AMaze.model.S_CONST))
 	{
 		acc|=AMaze.model.N_CONST;
 	}
-	if(y+1 < this.height && ((this.board[x][y] & AMaze.model.S_CONST) == AMaze.model.S_CONST) && ((this.board[x][y+1] & AMaze.model.N_CONST) == AMaze.model.N_CONST))
+	if(y+1 < this.height && (this.board[x][y] & AMaze.model.S_CONST == AMaze.model.S_CONST) && (this.board[x][y+1] & AMaze.model.N_CONST == AMaze.model.N_CONST))
 	{
 		acc|=AMaze.model.S_CONST;
 	}
-	if(x-1 >= 0 && ((this.board[x][y] & AMaze.model.W_CONST) == AMaze.model.W_CONST) && ((this.board[x-1][y] & AMaze.model.E_CONST) == AMaze.model.E_CONST))
+	if(x-1 >= 0 && (this.board[x][y] & AMaze.model.W_CONST == AMaze.model.W_CONST) && (this.board[x-1][y] & AMaze.model.E_CONST == AMaze.model.E_CONST))
 	{
 		acc|=AMaze.model.W_CONST;
 	}
-	if(x+1 < this.width && ((this.board[x][y] & AMaze.model.E_CONST) == AMaze.model.E_CONST) && ((this.board[x+1][y] & AMaze.model.W_CONST) == AMaze.model.W_CONST))
+	if(x+1 < this.width && (this.board[x][y] & AMaze.model.E_CONST == AMaze.model.E_CONST) && (this.board[x+1][y] & AMaze.model.W_CONST == AMaze.model.W_CONST))
 	{
 		acc|=AMaze.model.E_CONST;
 	}
@@ -67,22 +67,22 @@ AMaze.model.Maze.prototype.accessibleExits = function(x, y) {
 //params: cell x and y and cell-type number indicating direction(s)
 //where wall(s) should be opened
 AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
-	if(((dir & AMaze.model.N_CONST) == AMaze.model.N_CONST) && y-1 >= 0)
+	if((dir & AMaze.model.N_CONST == AMaze.model.N_CONST) && y-1 >= 0)
 	{
 		this.board[x][y] |= AMaze.model.N_CONST;
 		this.board[x][y-1] |= AMaze.model.S_CONST;
 	}
-	if(((dir & AMaze.model.E_CONST) == AMaze.model.E_CONST) && x+1 < this.width)
+	if((dir & AMaze.model.E_CONST == AMaze.model.E_CONST) && x+1 < this.width)
 	{
 		this.board[x][y] |= AMaze.model.E_CONST;
 		this.board[x+1][y] |= AMaze.model.W_CONST;
 	}
-	if(((dir & AMaze.model.S_CONST) == AMaze.model.S_CONST) && y+1 < this.height)
+	if((dir & AMaze.model.S_CONST == AMaze.model.S_CONST) && y+1 < this.height)
 	{
 		this.board[x][y] |= AMaze.model.S_CONST;
 		this.board[x][y+1] |= AMaze.model.N_CONST;
 	}
-	if(((dir & AMaze.model.W_CONST) == AMaze.model.W_CONST) && x-1 >= 0)
+	if((dir & AMaze.model.W_CONST == AMaze.model.W_CONST) && x-1 >= 0)
 	{
 		this.board[x][y] |= AMaze.model.W_CONST;
 		this.board[x-1][y] |= AMaze.model.E_CONST;
