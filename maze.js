@@ -8,7 +8,8 @@ canvas.Scene.new({
     name: "MyScene",
     materials: {
         images: {
-            smile: "images/smile.png"
+            smile: "images/smile.png",
+            trail: "images/trail_dot1.png"
         }
     },
     ready: function(stage) {
@@ -21,11 +22,20 @@ canvas.Scene.new({
 
         stage.append(this.el);
 
+        //trail dot
+        trailDot = function (x, y) {
+            trail = thisThing.createElement(16,16);
+            trail = drawImage(materials.images.trail);
+            trail.x = x;
+            trail.y = y;
+        }
+
 		//console.log("width: " + _canvas.width + ", height: " + _canvas.height);
 		canvas.Input.keyUp(Input.Up, function(e) {
 			if(thisThing.el.y > 0)
 			{
 				thisThing.el.y = Math.max(0,thisThing.el.y-32);
+                stage.append(new trailDot(16, thisThing.el.y-16));
 			}
         });
 
@@ -33,6 +43,7 @@ canvas.Scene.new({
 			if(thisThing.el.y < _canvas.height)
 			{
 				thisThing.el.y = Math.min(_canvas.height-32,thisThing.el.y+32);
+                stage.append(new trailDot(_canvas.height-16, thisThing.el.y+16));
 			}
         });
 
@@ -40,6 +51,7 @@ canvas.Scene.new({
 			if(thisThing.el.x > 0)
 			{
 				thisThing.el.x = Math.max(0,thisThing.el.x-32);
+                stage.append(new trailDot(16, thisThing.el.x-16));
 			}
         });
 
@@ -47,6 +59,7 @@ canvas.Scene.new({
 			if(thisThing.el.x < _canvas.width)
 			{
 				thisThing.el.x = Math.min(_canvas.width-32,thisThing.el.x+32);
+                stage.append(new trailDot(_canvas.width-16,thisThing.el.x+16));
 			}
         });
     },
