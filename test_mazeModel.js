@@ -4,7 +4,7 @@ testsPassing = true;
 
 //sanity check, constructor should construct
 var modelTest = new AMaze.model.Maze();
-testsPassing &= TestRig.assertTrue(modelTest.width == modelTest.board.length, "Reported width ("+modelTest.width+") not same as actual width ("+modelTest.board.length);
+testsPassing &=TestRig.assertTrue(modelTest.width == modelTest.board.length, "Reported width ("+modelTest.width+") not same as actual width ("+modelTest.board.length);
 testsPassing &=TestRig.assertTrue(modelTest.width == AMaze.model.DEF_WIDTH, "Idiot proofing: width = default width");
 
 //checking that path making works correctly
@@ -32,7 +32,9 @@ expectedExits = (N_CONST | E_CONST | S_CONST | W_CONST);
 modelTest.makeAccessible(testX,testY, expectedExits);
 testsPassing &=TestRig.assertTrue(modelTest.board[testX][testY] == expectedExits, "board["+testX+"]["+testY+"] is incorrectly accessible: " + modelTest.board[testY][testY] + ", not " + expectedExits);
 
-var span = document.getElementById('log');
+var span = $('#log');
 
-if(typeof span !== "undefined")
-	span.appendChild( document.createTextNode(testsPassing? "All tests passed" : "Tests failed, check console log") );
+if(span != null)
+{
+	span.html(testsPassing? "All tests passed" : "Tests failed:<br \>"+TestRig.log.join("<br \>"));
+}

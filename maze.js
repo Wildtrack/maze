@@ -20,9 +20,8 @@ canvas.Scene.new({
         _canvas = this.getCanvas();
 
         stage.append(this.el);
-		//don't know why this doesn't work
 
-		console.log("width: " + _canvas.width + ", height: " + _canvas.height);
+		//console.log("width: " + _canvas.width + ", height: " + _canvas.height);
 		canvas.Input.keyUp(Input.Up, function(e) {
 			if(thisThing.el.y > 0)
 			{
