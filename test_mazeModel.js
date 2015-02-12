@@ -10,8 +10,10 @@ TestRig.assertTrue(modelTest.width == AMaze.model.DEF_WIDTH, "Idiot proofing: wi
 var expectedExits = (E_CONST | S_CONST);
 modelTest.makeAccessible(0,0, (N_CONST | S_CONST | E_CONST | W_CONST));
 TestRig.assertTrue(modelTest.board[0][0] == expectedExits, "board[0][0] is incorrectly accessible: " + modelTest.board[0][0] + ", not " + expectedExits);
+TestRig.assertTrue(modelTest.board[0][1] == N_CONST, "board[0][1] is incorrectly accessible: " + modelTest.board[0][1] + ", not " + N_CONST);
+TestRig.assertTrue(modelTest.board[1][0] == W_CONST, "board[1][0] is incorrectly accessible: " + modelTest.board[1][0] + ", not " + W_CONST);
 
-//accessible exits should report correct exits (relies on above)
+//accessible exits should report correct exits (relies on above not failing)
 var exits = modelTest.accessibleExits(0,0);
 TestRig.assertTrue(exits == expectedExits, "board[0][0]'s reported accessible exits " + exits + ", not " + expectedExits);
 
