@@ -12,7 +12,7 @@ AMaze.model = {
 
 		//default start and end are 0,0 and (width),(height)
 		this.start = [0,0];
-		this.end = [this.width, this.height];
+		this.end = [this.width-1, this.height-1];
 
 		//board is a 2d array of cells, each cell is one of 16 states
 		//check with bitwise and
@@ -87,4 +87,18 @@ AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
 		this.board[x][y] |= AMaze.model.W_CONST;
 		this.board[x-1][y] |= AMaze.model.E_CONST;
 	}
+};
+
+//loads JSON data from disk (same filesystem as stored on)
+//calls func on success
+AMaze.model.Maze.prototype.load = function(filename, func) {
+	$.getJSON( filename, {}, function( data ) {
+		var load = new AMaze.model.Maze();
+		load.width = data.width;
+		load.height = data.height;
+		load.start = data.start;
+		load.end = data.end;
+		load.board = data.board;
+		func(load);
+	});
 };

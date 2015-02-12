@@ -1,6 +1,6 @@
 var N_CONST = AMaze.model.N_CONST, E_CONST = AMaze.model.E_CONST,
 S_CONST = AMaze.model.S_CONST, W_CONST = AMaze.model.W_CONST,
-testsPassing = true;
+testsPassing = true, testsFinished = false;
 
 //sanity check, constructor should construct
 var modelTest = new AMaze.model.Maze();
@@ -32,9 +32,25 @@ expectedExits = (N_CONST | E_CONST | S_CONST | W_CONST);
 modelTest.makeAccessible(testX,testY, expectedExits);
 testsPassing &=TestRig.assertTrue(modelTest.board[testX][testY] == expectedExits, "board["+testX+"]["+testY+"] is incorrectly accessible: " + modelTest.board[testY][testY] + ", not " + expectedExits);
 
-var span = $('#log');
+modelTest.load('./mocks/maze1.json', function(loaded) {
+	modelTest = loaded;
+	testsPassing &=TestRig.assertTrue(modelTest.accessibleExits(0,1) == (S_CONST | N_CONST), "file loaded board[0][1] is incorrectly accessible: "+modelTest.accessibleExits(0,1)+", not "+(S_CONST | N_CONST));
+	testsPassing &=TestRig.assertTrue(modelTest.accessibleExits(1,2) == W_CONST, "file loaded board[1][2] is incorrectly accessible: "+modelTest.accessibleExits(1,2)+", not "+W_CONST);
+	testsPassing &=TestRig.assertTrue(modelTest.width == 2, "file loaded width is incorrect: "+modelTest.width+", not "+2);
+	testsPassing &=TestRig.assertTrue(modelTest.height == 3, "file loaded height is incorrect: "+modelTest.height+", not "+3);
+	testsPassing &=TestRig.assertTrue(modelTest.start.equals([0,1]), "file loaded start is incorrect: "+modelTest.start+", not "+[0,1]);
+	testsPassing &=TestRig.assertTrue(modelTest.end.equals([1,2]), "file loaded end is incorrect: "+modelTest.end+", not "+[1,2]);
+	done();
+});
 
-if(span != null)
+done();
+
+
+function done()
 {
-	span.html(testsPassing? "All tests passed" : "Tests failed:<br \>"+TestRig.log.join("<br \>"));
+	var span = $('#log');
+	if(span != null)
+	{
+		span.html(testsPassing? "All tests passed" : "Tests failed:<br \>"+TestRig.log.join("<br \>"));
+	}
 }
