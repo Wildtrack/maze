@@ -13,6 +13,7 @@ AMaze.model = {
 		//default start and end are 0,0 and (width),(height)
 		this.start = [0,0];
 		this.end = [this.width-1, this.height-1];
+		this.currPos = [0,0];
 
 		//board is a 2d array of cells, each cell is one of 16 states
 		//check with bitwise and
@@ -87,6 +88,42 @@ AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
 		this.board[x][y] |= AMaze.model.W_CONST;
 		this.board[x-1][y] |= AMaze.model.E_CONST;
 	}
+};
+
+//returns true if direction is accessible from x,y
+AMaze.model.maze.prototype.canAccess = function(x,y, dir) {
+	return AMaze.model.Maze.accessibleExits(x,y)&dir;
+};
+
+//returns true if dir has exactly one direction
+AMaze.model.maze.prototype.onlyOneDir = function(dir) {
+	var bCount = 0;
+	for each (var tDir in [AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST]) {
+		bCount += (dir&tDir)? 1 : 0;
+	}
+	return bCount == 1;
+};
+
+//returns true if player was moved
+AMaze.model.maze.prototype.movePlayer = function(dir) {
+	var valid = AMaze.model.maze.onlyOneDir(dir) && AMaze.model.maze.canAccess(this.currpos[0], this.currpos[1], dir);
+	if(valid) {
+		switch(dir) {
+			case AMaze.model.N_CONST:
+				this.currpos[1]-=1;
+				break;
+			case AMaze.model.E_CONST:
+				this.currpos[0]+=1;
+				break;
+			case AMaze.model.S_CONST:
+				this.currpos[1]+=1;
+				break;
+			case AMaze.model.W_CONST:
+				this.currpos[0]-=1;
+				break;
+		}
+	}
+	return valid;
 };
 
 //loads JSON data from disk (same filesystem as stored on)
