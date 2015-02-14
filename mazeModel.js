@@ -91,21 +91,21 @@ AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
 };
 
 //returns true if direction is accessible from x,y
-AMaze.model.maze.prototype.canAccess = function(x,y, dir) {
+AMaze.model.Maze.prototype.canAccess = function(x,y, dir) {
 	return AMaze.model.Maze.accessibleExits(x,y)&dir;
 };
 
 //returns true if dir has exactly one direction
-AMaze.model.maze.prototype.onlyOneDir = function(dir) {
+AMaze.model.Maze.prototype.onlyOneDir = function(dir) {
 	var bCount = 0;
-	for each (var tDir in [AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST]) {
+	[AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST].forEach( function(dir, idx, arr) {
 		bCount += (dir&tDir)? 1 : 0;
-	}
+	});
 	return bCount == 1;
 };
 
 //returns true if player was moved
-AMaze.model.maze.prototype.movePlayer = function(dir) {
+AMaze.model.Maze.prototype.movePlayer = function(dir) {
 	var valid = AMaze.model.maze.onlyOneDir(dir) && AMaze.model.maze.canAccess(this.currpos[0], this.currpos[1], dir);
 	if(valid) {
 		switch(dir) {
