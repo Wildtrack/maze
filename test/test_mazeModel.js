@@ -40,19 +40,9 @@ modelTest.load('./mocks/maze1.json', function(loaded) {
 	testsPassing &=TestRig.assertTrue(modelTest.accessibleExits(1,2) == W_CONST, "(file load) board[1][2] reported accessible "+modelTest.accessibleExits(1,2)+", expected "+W_CONST);
 	testsPassing &=TestRig.assertTrue(modelTest.width == 2, "(file load) width reported "+modelTest.width+", expected "+2);
 	testsPassing &=TestRig.assertTrue(modelTest.height == 3, "(file load) height reported "+modelTest.height+", expected "+3);
-	testsPassing &=TestRig.assertTrue(modelTest.start.equals([0,1]), "(file load) start reported "+modelTest.start+", expected "+[0,1]);
-	testsPassing &=TestRig.assertTrue(modelTest.end.equals([1,2]), "(file load) end reported "+modelTest.end+", expected "+[1,2]);
-	done();
+	testsPassing &=TestRig.assertTrue(TestRig.arrEquals(modelTest.start, [0,1]), "(file load) start reported "+modelTest.start+", expected "+[0,1]);
+	testsPassing &=TestRig.assertTrue(TestRig.arrEquals(modelTest.end, [1,2]), "(file load) end reported "+modelTest.end+", expected "+[1,2]);
+	TestRig.fillLog('log');
 });
 
-done();
-
-
-function done()
-{
-	var span = $('#log');
-	if(span != null)
-	{
-		span.html(TestRig.report().replace(/\n/g,"<br />"));
-	}
-}
+TestRig.fillLog('log');

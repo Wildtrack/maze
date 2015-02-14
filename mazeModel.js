@@ -13,7 +13,7 @@ AMaze.model = {
 		//default start and end are 0,0 and (width),(height)
 		this.start = [0,0];
 		this.end = [this.width-1, this.height-1];
-		this.currPos = [0,0];
+		this.currPos = [this.start[0],this.start[1]];
 
 		//board is a 2d array of cells, each cell is one of 16 states
 		//check with bitwise and
@@ -36,6 +36,14 @@ AMaze.model = {
 				this.board[this.width-x-1].push(0);
 			}
 		}
+	},
+	//returns true if dir has exactly one direction
+	onlyOneDir : function(dir) {
+		var bCount = 0;
+		[AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST].forEach( function(tDir, idx, arr) {
+			bCount += (dir&tDir)? 1 : 0;
+		});
+		return bCount == 1;
 	}
 };
 
@@ -92,34 +100,25 @@ AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
 
 //returns true if direction is accessible from x,y
 AMaze.model.Maze.prototype.canAccess = function(x,y, dir) {
-	return AMaze.model.Maze.accessibleExits(x,y)&dir;
-};
-
-//returns true if dir has exactly one direction
-AMaze.model.Maze.prototype.onlyOneDir = function(dir) {
-	var bCount = 0;
-	[AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST].forEach( function(dir, idx, arr) {
-		bCount += (dir&tDir)? 1 : 0;
-	});
-	return bCount == 1;
+	return this.accessibleExits(x,y)&dir;
 };
 
 //returns true if player was moved
 AMaze.model.Maze.prototype.movePlayer = function(dir) {
-	var valid = AMaze.model.maze.onlyOneDir(dir) && AMaze.model.maze.canAccess(this.currpos[0], this.currpos[1], dir);
+	var valid = AMaze.model.onlyOneDir(dir) && this.canAccess(this.currPos[0], this.currPos[1], dir);
 	if(valid) {
 		switch(dir) {
 			case AMaze.model.N_CONST:
-				this.currpos[1]-=1;
+				this.currPos[1]-=1;
 				break;
 			case AMaze.model.E_CONST:
-				this.currpos[0]+=1;
+				this.currPos[0]+=1;
 				break;
 			case AMaze.model.S_CONST:
-				this.currpos[1]+=1;
+				this.currPos[1]+=1;
 				break;
 			case AMaze.model.W_CONST:
-				this.currpos[0]-=1;
+				this.currPos[0]-=1;
 				break;
 		}
 	}
@@ -134,6 +133,7 @@ AMaze.model.Maze.prototype.load = function(filename, func) {
 		load.width = data.width;
 		load.height = data.height;
 		load.start = data.start;
+		load.currPos = [data.start[0], data.start[1]];
 		load.end = data.end;
 		load.board = data.board;
 		func(load);
