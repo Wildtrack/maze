@@ -5,15 +5,16 @@ testsPassing = true, testsFinished = false;
 TestRig.verboseMode = true;
 
 
+var canvas = CE.defines("canvas_id")
+			.extend(Input);
+
 //not testing the model here, assume it works
-var modelTest = new AMaze.model.Maze();//cells will be approximately size 320/10 = 32 (with some padding changes)
-modelTest.load('./mocks/maze2.json', function(loaded) {
+AMaze.model.load('./mocks/maze2.json', function(loaded) {
 	var modelTest = loaded;
-	var canvas = CE.defines("canvas_id")
-	            .extend(Input)
-	            .ready(function() {
-	                canvas.Scene.call("MyScene");
-	            });
+
+	canvas.ready(function() {
+		canvas.Scene.call("MyScene");
+	});
 
 	canvas.Scene.new({
 	    name: "MyScene",
