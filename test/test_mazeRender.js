@@ -17,15 +17,13 @@ canvas.Scene.new({
     name: "MyScene",
     materials: {
         images: {
-            smile: "../images/smile.png"
+            player: "../images/smile.png"
         }
     },
     ready: function(stage) {
-        this.player = this.createElement(32,32);
-        this.player.drawImage("smile");
-        stage.append(this.player);
 
-        this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':this,'player':this.player,'maze':modelTest});
+        this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':this,'stage':stage,'maze':modelTest});
+        this.mazeRenderer.drawMaze();
 
 		canvas.Input.keyUp(Input.Up, function(e) {
 			modelTest.movePlayer(AMaze.model.N_CONST);
