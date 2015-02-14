@@ -31,15 +31,6 @@ canvas.Scene.new({
             return trail;
         }
 
-        //trail dot
-        trailDot = function (x, y) {
-            trail = thisThing.createElement(16,16);
-            trail.drawImage("trail");
-            trail.x = x;
-            trail.y = y;
-            return trail;
-        };
-
         var trailModel = {
         	width: 20, height: 20, theDots: [],
         	map: function() {
