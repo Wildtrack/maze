@@ -34,7 +34,7 @@ expectedExits = (N_CONST | E_CONST | S_CONST | W_CONST);
 modelTest.makeAccessible(testX,testY, expectedExits);
 testsPassing &=TestRig.assertTrue(modelTest.board[testX][testY] == expectedExits, "(makeAccessible) board["+testX+"]["+testY+"] reported accessible " + modelTest.board[testY][testY] + ", expected " + expectedExits);
 
-modelTest.load('./mocks/maze1.json', function(loaded) {
+AMaze.model.load('./mocks/maze1.json', function(loaded) {
 	var modelTest = loaded;
 	testsPassing &=TestRig.assertTrue(modelTest.accessibleExits(0,1) == (S_CONST | N_CONST), "(file load) board[0][1] reported accessible "+modelTest.accessibleExits(0,1)+", expected "+(S_CONST | N_CONST));
 	testsPassing &=TestRig.assertTrue(modelTest.accessibleExits(1,2) == W_CONST, "(file load) board[1][2] reported accessible "+modelTest.accessibleExits(1,2)+", expected "+W_CONST);

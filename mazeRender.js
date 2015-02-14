@@ -81,16 +81,15 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 
 		var self = this;
 
-		var drawWall = function(ctx,x1,y1,x2,y2) {
-			self.displayMaze.strokeStyle  = self.style.wall;
-			self.displayMaze.beginPath();
+		var drawWall = function(x1,y1,x2,y2) {
 			self.displayMaze.moveTo(x1,y1);
 			self.displayMaze.lineTo(x2,y2);
 			self.displayMaze.stroke();
-			self.displayMaze.closePath();
 		};
 
 		//drawing the maze
+		this.displayMaze.beginPath();
+		this.displayMaze.strokeStyle  = self.style.wall;
 		for( x = 0; x < this.maze.width; x++)
 		{
 			for( y = 0; y < this.maze.height; y++)
@@ -117,6 +116,7 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 				}
 			}
 		}
+		this.displayMaze.closePath();
 	}
 };
 
