@@ -18,30 +18,36 @@ var TestRig = TestRig || {
 	reset: function() {
 		TestRig.log = [];
 		TestRig.passing = true;
+	},
+	fillLog: function(id) {
+		var span = $('#'+id);
+		if(span != null)
+		{
+			span.html(this.report().replace(/\n/g,"<br />"));
+		}
+	},
+	//http://stackoverflow.com/questions/7837456/comparing-two-arrays-in-javascript
+	arrEquals: function(th, array) {
+		// if the other array is a falsy value, return
+		if (!array)
+			return false;
+
+		// compare lengths - can save a lot of time
+		if (th.length != array.length)
+			return false;
+
+		for (var i = 0, l=th.length; i < l; i++) {
+			// Check if we have nested arrays
+			if (th[i] instanceof Array && array[i] instanceof Array) {
+				// recurse into the nested arrays
+				if (!th[i].equals(array[i]))
+					return false;
+			}
+			else if (th[i] != array[i]) {
+				// Warning - two different object instances will never be equal: {x:20} != {x:20}
+				return false;
+			}
+		}
+    	return true;
 	}
 };
-
-//http://stackoverflow.com/questions/7837456/comparing-two-arrays-in-javascript
-Array.prototype.equals = function (array) {
-    // if the other array is a falsy value, return
-    if (!array)
-        return false;
-
-    // compare lengths - can save a lot of time
-    if (this.length != array.length)
-        return false;
-
-    for (var i = 0, l=this.length; i < l; i++) {
-        // Check if we have nested arrays
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            // recurse into the nested arrays
-            if (!this[i].equals(array[i]))
-                return false;
-        }
-        else if (this[i] != array[i]) {
-            // Warning - two different object instances will never be equal: {x:20} != {x:20}
-            return false;
-        }
-    }
-    return true;
-}
