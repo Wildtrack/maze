@@ -38,12 +38,26 @@ AMaze.model = {
 		}
 	},
 	//returns true if dir has exactly one direction
-	onlyOneDir : function(dir) {
+	onlyOneDir: function(dir) {
 		var bCount = 0;
 		[AMaze.model.N_CONST,AMaze.model.E_CONST,AMaze.model.S_CONST,AMaze.model.W_CONST].forEach( function(tDir, idx, arr) {
 			bCount += (dir&tDir)? 1 : 0;
 		});
 		return bCount == 1;
+	},
+	//loads JSON data from disk (same filesystem as stored on)
+	//calls func on success with loaded maze as param
+	load: function(filename, func) {
+		$.getJSON( filename, {}, function( data ) {
+			var load = new AMaze.model.Maze();
+			load.width = data.width;
+			load.height = data.height;
+			load.start = data.start;
+			load.currPos = [data.start[0], data.start[1]];
+			load.end = data.end;
+			load.board = data.board;
+			func(load);
+		});
 	}
 };
 
@@ -123,19 +137,4 @@ AMaze.model.Maze.prototype.movePlayer = function(dir) {
 		}
 	}
 	return valid;
-};
-
-//loads JSON data from disk (same filesystem as stored on)
-//calls func on success
-AMaze.model.Maze.prototype.load = function(filename, func) {
-	$.getJSON( filename, {}, function( data ) {
-		var load = new AMaze.model.Maze();
-		load.width = data.width;
-		load.height = data.height;
-		load.start = data.start;
-		load.currPos = [data.start[0], data.start[1]];
-		load.end = data.end;
-		load.board = data.board;
-		func(load);
-	});
 };
