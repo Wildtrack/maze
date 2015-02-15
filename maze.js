@@ -33,9 +33,12 @@ canvas.Scene.new({
 
         var trailModel = {
         	width: 20, height: 20, theDots: [],
-        	map: function() {
+        	map: function(opts) {
+                // trailModel and mazeModel should share same opts object
+        		//
+                trailModel.width = typeof opts !== "undefined"? opts.width || trailModel.width : trailModel.width;
+                trailModel.height = typeof opts !== "undefined"? opts.height || trailModel.height : trailModel.height; 
 
-        		//this.theDots = [];
 				for( var x = trailModel.width; x--; )
 				{
 					trailModel.theDots.push([]);
@@ -66,7 +69,7 @@ canvas.Scene.new({
         		if (!this.exists(x1, y1)) {
         			var newDot = new trailDot(x, y);
         			trailModel.theDots[x1][y1] = newDot;
-        			stage.append(newDot);
+        			stage.prepend(newDot);
         		}
         };
 
