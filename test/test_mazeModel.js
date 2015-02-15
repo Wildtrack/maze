@@ -18,13 +18,13 @@ testsPassing &=TestRig.assertTrue(modelTest.board[1][0] == W_CONST, "(makeAccess
 
 //accessible exits should report correct exits (relies on above not failing)
 var exits = modelTest.accessibleExits(0,0);
-testsPassing &=TestRig.assertTrue(exits == expectedExits, "(accessibleExits) board[0][0] reported accessible exits " + exits + ", expected " + expectedExits);
+testsPassing &=TestRig.assertTrue((exits == expectedExits), "(accessibleExits) board[0][0] reported accessible exits " + exits + ", expected " + expectedExits);
 
 //constructor should make correct sized board
 var testWidth = 15, testHeight = 8;
 modelTest = new AMaze.model.Maze({width:testWidth,height:testHeight});
 testsPassing &=TestRig.assertTrue(modelTest.board.length == modelTest.width, "(constructor with opts) direct width "+modelTest.width+", expected "+modelTest.board.length);
-testsPassing &=TestRig.assertTrue(modelTest.board[0].length == modelTest.height, "(constructor with opts) direct height ("+modelTest.height+", expected "+modelTest.board[0].length);
+testsPassing &=TestRig.assertTrue(modelTest.board[0].length == modelTest.height, "(constructor with opts) direct height "+modelTest.height+", expected "+modelTest.board[0].length);
 testsPassing &=TestRig.assertTrue(modelTest.width == testWidth, "(constructor with opts) reported width " +modelTest.width+ ", expected "+testWidth);
 testsPassing &=TestRig.assertTrue(modelTest.height == testHeight, "(constructor with opts) reported height " +modelTest.height+ ", expected "+testHeight);
 
@@ -32,7 +32,7 @@ testsPassing &=TestRig.assertTrue(modelTest.height == testHeight, "(constructor 
 var testX = 3, testY = 4;
 expectedExits = (N_CONST | E_CONST | S_CONST | W_CONST);
 modelTest.makeAccessible(testX,testY, expectedExits);
-testsPassing &=TestRig.assertTrue(modelTest.board[testX][testY] == expectedExits, "(makeAccessible) board["+testX+"]["+testY+"] reported accessible " + modelTest.board[testY][testY] + ", expected " + expectedExits);
+testsPassing &=TestRig.assertTrue((modelTest.board[testX][testY] == expectedExits), "(makeAccessible) board["+testX+"]["+testY+"] reported accessible " + modelTest.board[testX][testY] + ", expected " + expectedExits);
 
 AMaze.model.load('./mocks/maze1.json', function(loaded) {
 	var modelTest = loaded;

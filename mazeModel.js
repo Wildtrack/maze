@@ -114,7 +114,7 @@ AMaze.model.Maze.prototype.makeAccessible = function(x, y, dir) {
 
 //returns true if direction is accessible from x,y
 AMaze.model.Maze.prototype.canAccess = function(x,y, dir) {
-	return this.accessibleExits(x,y)&dir;
+	return (this.accessibleExits(x,y)&dir) != 0;
 };
 
 //returns true if player was moved
