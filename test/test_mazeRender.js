@@ -5,48 +5,47 @@ testsPassing = true, testsFinished = false;
 TestRig.verboseMode = true;
 
 
-var canvas = CE.defines("canvas_id")
+$(function() {
+	var canvas = CE.defines("canvas_id")
 			.extend(Input);
 
-//not testing the model here, assume it works
-AMaze.model.load('./mocks/maze2.json', function(loaded) {
-	var modelTest = loaded;
+	//not testing the model here, assume it works
+	AMaze.model.load('./mocks/maze2.json', function(loaded) {
+		var modelTest = loaded;
 
-	canvas.ready(function() {
-		canvas.Scene.call("MyScene");
-	});
+		canvas.Scene.new({
+			name: "MyScene",
+			materials: {
+				images: {
+					player: "../images/smile.png"
+				}
+			},
+			ready: function(stage) {
 
-	canvas.Scene.new({
-	    name: "MyScene",
-	    materials: {
-	        images: {
-	            player: "../images/smile.png"
-	        }
-	    },
-	    ready: function(stage) {
+				this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':this,'stage':stage,'maze':modelTest});
+				this.mazeRenderer.drawMaze();
 
-	        this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':this,'stage':stage,'maze':modelTest});
-	        this.mazeRenderer.drawMaze();
+				canvas.Input.keyUp(Input.Up, function(e) {
+					modelTest.movePlayer(AMaze.model.N_CONST);
+				});
 
-			canvas.Input.keyUp(Input.Up, function(e) {
-				modelTest.movePlayer(AMaze.model.N_CONST);
-	        });
+				canvas.Input.keyUp(Input.Bottom, function(e) {
+					modelTest.movePlayer(AMaze.model.S_CONST);
+				});
 
-			canvas.Input.keyUp(Input.Bottom, function(e) {
-				modelTest.movePlayer(AMaze.model.S_CONST);
-	        });
+				canvas.Input.keyUp(Input.Left, function(e) {
+					modelTest.movePlayer(AMaze.model.W_CONST);
+				});
 
-			canvas.Input.keyUp(Input.Left, function(e) {
-				modelTest.movePlayer(AMaze.model.W_CONST);
-	        });
-
-			canvas.Input.keyUp(Input.Right, function(e) {
-				modelTest.movePlayer(AMaze.model.E_CONST);
-	        });
-	    },
-	    render: function(stage) {
-			this.mazeRenderer.refresh();
-	        stage.refresh();
-	    }
+				canvas.Input.keyUp(Input.Right, function(e) {
+					modelTest.movePlayer(AMaze.model.E_CONST);
+				});
+			},
+			render: function(stage) {
+				this.mazeRenderer.refresh();
+				stage.refresh();
+			}
+		});
+		canvas.ready().Scene.call("MyScene");
 	});
 });
