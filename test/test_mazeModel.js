@@ -45,4 +45,35 @@ AMaze.model.load('./mocks/maze1.json', function(loaded) {
 	TestRig.fillLog('log');
 });
 
+//onlyOneDir
+var testDir = N_CONST, dirResult = AMaze.model.onlyOneDir(testDir);
+testsPassing &= TestRig.assertTrue(dirResult, "(onlyonedir) only one direction (N) reported "+dirResult+", expected true");
+testDir = (N_CONST | E_CONST), dirResult = AMaze.model.onlyOneDir(testDir);
+testsPassing &= TestRig.assertTrue(!dirResult, "(onlyonedir) only one direction (N | E) reported "+dirResult+", expected false");
+
+//moving the player
+modelTest = new AMaze.model.Maze();
+modelTest.makeAccessible(modelTest.start[0],modelTest.start[1], S_CONST);
+var moveResult = modelTest.movePlayer(S_CONST);
+testsPassing &= TestRig.assertTrue(moveResult, "(moving player) player reported to have moved ("+moveResult+"), expected to move (true)");
+testsPassing &= TestRig.assertTrue(TestRig.arrEquals(modelTest.currPos, [0,1]), "(moving player) player reported to be at ["
+				+modelTest.currPos[0]+","+modelTest.currPos[1]+"], expected [0,1]");
+moveResult = modelTest.movePlayer(S_CONST);
+testsPassing &= TestRig.assertTrue(!moveResult, "(moving player) player reported to have moved ("+moveResult+"), expected to move (false)");
+testsPassing &= TestRig.assertTrue(TestRig.arrEquals(modelTest.currPos, [0,1]), "(moving player) player reported to be at ["
+				+modelTest.currPos[0]+","+modelTest.currPos[1]+"], expected [0,1]");
+
+testWidth = 1, testHeight = 2;
+modelTest = new AMaze.model.Maze({width:testWidth,height:testHeight});
+modelTest.makeAccessible(modelTest.start[0],modelTest.start[1], S_CONST);
+var atExit = modelTest.hasPlayerWon();
+testsPassing &= TestRig.assertTrue(!atExit, "(winning game) player reported to have won ("+atExit+"), expected to have won (false)");
+testsPassing &= TestRig.assertTrue(TestRig.arrEquals(modelTest.currPos, [0,0]), "(winning game) player reported to be at ["
+				+modelTest.currPos[0]+","+modelTest.currPos[1]+"], expected to be at [0,0]");
+modelTest.movePlayer(S_CONST);
+atExit = modelTest.hasPlayerWon();
+testsPassing &= TestRig.assertTrue(atExit, "(winning game) player reported to have won ("+atExit+"), expected to have won (true)");
+testsPassing &= TestRig.assertTrue(TestRig.arrEquals(modelTest.currPos, [0,1]), "(winning game) player reported to be at ["
+				+modelTest.currPos[0]+","+modelTest.currPos[1]+"], expected to be at [0,1]");
+
 TestRig.fillLog('log');

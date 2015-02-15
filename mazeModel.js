@@ -138,3 +138,8 @@ AMaze.model.Maze.prototype.movePlayer = function(dir) {
 	}
 	return valid;
 };
+
+//returns true if the player is on the exit
+AMaze.model.Maze.prototype.hasPlayerWon = function() {
+	return (this.currPos[0] == this.end[0]) && (this.currPos[1] == this.end[1]);
+};
