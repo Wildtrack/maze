@@ -13,5 +13,8 @@ To run the current iteration of the game do the following:
 
 - Open index.html in Firefox in the main directory
 
-- Alternatively open index.html in Firefox from the test directory to run current test framework
+- Alternatively open index.html in Firefox from the test directory to run current test framework.
 
+- Use the arrow keys to move around the board.
+
+- That's all it does right now!
