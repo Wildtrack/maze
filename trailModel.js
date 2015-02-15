@@ -40,7 +40,7 @@ trailModel.create.prototype.exists = function(x, y)
         if (typeof data == "object")
         {
                 // check if it is backtrack
-                if (trailModel.backTrackOn && this.trace.check(x, y)) {
+                if (trailModel.backTrackOn && this.trace.onTrack(x, y)) {
                         data.remove();
                         trailModel.theBoard[x][y] = null;
                 }
@@ -50,9 +50,9 @@ trailModel.create.prototype.exists = function(x, y)
                         
                 }
 
-        	return 1;
+        	return true;
         }
-        return 0;
+        return false;
 };
 
 trailModel.create.prototype.makeTrail = function(stage, cursor) 
