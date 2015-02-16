@@ -1,5 +1,5 @@
 var trailModel = {
-        width: 20, height: 20, overlayEffectOn: false, backTrackOn: false,
+        width: 20, height: 20, overlayEffectOn: false, backTrackOn: true,
         theBoard: [],
         create: function(trailDot, opts) {
                 // trailModel and mazeModel should share same opts object
@@ -10,40 +10,58 @@ var trailModel = {
                 this.dot = trailDot;
                 this.trace = {};
 
+                this.lastDot = 0;
+                this.lastX = 0;
+                this.lastY = 0;
+
 		for( var x = trailModel.width; x--; )
 		{
 			trailModel.theBoard.push([]);
 			for( var y = trailModel.height; y--; )
 			{
-				trailModel.theBoard[trailModel.width-x-1].push();
+				trailModel.theBoard[trailModel.width-x-1].push(0);
 			}
 		}
 
                 // turn overaly effect on/off
-                function setOverlayEffect(flag) {
+                this.setOverlayEffect = function(flag) {
                         trailModel.overlayEffectOn = boolean(flag);
                 }
-
+                
                 // turn backtrack on/off
-                function setBackTrack(flag) {
+                this.setBackTrack = function(flag) {
                         trailModel.backTrackOn = boolean(flag);
-
-                        $.getScript("backtrack.js");
-                        this.trace = new backtrack.model();
                 }
+
+                this.trace = new backtrack.model();
+
         }
 };
 
 trailModel.create.prototype.exists = function(x, y) 
 {
+
+        var flag = !trailModel.backTrackOn || (flag = this.trace.onTrack(x, y));
         var data = trailModel.theBoard[x][y];
-        if (typeof data == "object")
+
+        console.log(x+","+y+":"+flag);
+
+        if (data)
         {
                 // check if it is backtrack
-                if (trailModel.backTrackOn && this.trace.onTrack(x, y)) {
+                if (flag) {
+                        
                         data.remove();
-                        trailModel.theBoard[x][y] = null;
-                }
+                        trailModel.theBoard[x][y] = 0;
+
+                        // remove previous dot if exists in backtrack
+                        if (this.lastDot != 0)
+                        {
+                                this.lastDot.remove();
+                                trailModel.theBoard[this.lastX][this.lastY] = 0;
+                                this.lastDot = 0;
+                        }
+                } 
 
                 // create some effect when track overlays
                 if (trailModel.overlayEffectOn) {
@@ -62,12 +80,10 @@ trailModel.create.prototype.makeTrail = function(stage, cursor)
         var x1 = x/32;
         var y1 = y/32;
 
-        if (trailModel.overlayEffectOn) this.trace.track(x, y);
-
         if (!this.exists(x1, y1)) {
-                var newDot = new this.dot(x, y);
-        	trailModel.theBoard[x1][y1] = newDot;
-        	stage.prepend(newDot);
+                this.lastDot = new this.dot(x, y);
+        	trailModel.theBoard[this.lastX = x1][this.lastY = y1] = this.lastDot;
+        	stage.prepend(this.lastDot);
         }
 };
 

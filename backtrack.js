@@ -27,7 +27,8 @@ backtrack.model = function (opts)
 		this.lastX;
 		this.lastY;
 
-		
+		// turn on for debug information
+		this.debugOn = true;
 
 		// Root coord must be present before track model can be used
 		this.setRoot = function(x, y) {
@@ -41,16 +42,25 @@ backtrack.model = function (opts)
 
 
 		//
-		// check if the cursor is backtracking
+		// check if the cursor is backtracking. True: backtrack, False: new trail
 		//
 		this.onTrack = function(x, y) {
 
+			if (this.debugOn) console.log("backtrack? "+this.backtracked+" backtrack dir: "+this.backtrackDir);
+
+			//fault-safe
+			if (!this.tree){
+				this.pointer = (this.tree = new trackNode(0, this.lastX = x, this.lastY = y, 0));
+				return false;
+			}
+
 			var newDir;
+			//Debug info
 			//if cursor is moving to a new direction then add a new node
 			//Each time either x or y would be changed. If both are changed then something is wrong!
 			if (this.lastX != x && this.lastY != y)
 			{
-				console.log("Unexpected move x:"+x+ " y"+y); //something is wrong!
+				console.log("Unexpected move x:"+x+ " y:"+y+"lastX:"+this.lastX+"lastY:"+this.lastY); //something is wrong!
 				return false;
 			}
 			else if (this.lastX == x && this.lastY == y) {
@@ -60,20 +70,29 @@ backtrack.model = function (opts)
 
 			newDir = this.getDirection([this.lastX, this.lastY],[x,y]);
 
+			if (this.currentDir == -1) //set up first step
+			{
+				this.currentDir = newDir;
+			}
 
 			// check if cursor direction changes
-			if (newDir != this.currentDir)
+			else if (newDir != this.currentDir)
 			{
 				// if a node has been revisted and cursor moves to its parent node --> BINGO!!!
 				if (this.nodeRevisited && newDir == this.backtrackDir)
 				{
+					
+					if (this.rootVisited(x,y)) return false;
+
 					this.pointer.head.child[backtrack.DIR_MAP[newDir]] = 0; //release child node from memory
 					this.pointer = this.pointer.head;
 
 					//check if hits another node 
 					if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
 					{
-						this.backtrackDir = this.pointer.direction; console.log("damn!");
+						if (this.rootVisited(x,y)) return false;
+						this.nodeRevisited = true; //duplicated line for future reference
+						this.backtrackDir = this.pointer.direction;
 					}
 					else this.nodeRevisited = false;
 					
@@ -93,6 +112,7 @@ backtrack.model = function (opts)
 					//if a node is revisited during backtracking, flag it
 					if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
 					{
+						if (this.rootVisited(x,y)) return false;
 						this.nodeRevisited = true;
 						this.backtrackDir = this.pointer.direction; //assign parent's backtrack direction
 					}
@@ -102,9 +122,11 @@ backtrack.model = function (opts)
 					return true;
 				}
 				else //if not moving backwards then create a new node
-				{
+				{	
+					if (this.debugOn) console.log("new node:"+x+","+y);
 					var dir = backtrack.DIR_MAP[this.currentDir];
 					this.pointer = (this.pointer.child[dir] = new trackNode(this.pointer, this.lastX, this.lastY, this.currentDir));
+					this.backtracked = false;
 					this.backtrackDir = backtrack.DIR_MAP[this.currentDir = newDir]; //backtrack direction is always the opposite of current direction after a node is created
 				}
 				//this.currentDir = currentDir;
@@ -115,6 +137,7 @@ backtrack.model = function (opts)
 				//if a node is revisited during backtracking, flag it
 				if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
 				{
+					if (this.rootVisited(x,y)) return false;
 					this.nodeRevisited = true;
 					this.backtrackDir = this.pointer.direction; 
 				}
@@ -128,6 +151,21 @@ backtrack.model = function (opts)
 			this.lastY = y;
 
 			return false;
+		}
+
+		// If it hits root again then reset everything
+		this.rootVisited = function(x, y) {
+
+			if (this.pointer.head == 0) {
+				this.currentDir = -1;
+				this.backtrackDir = -1;
+				this.nodeRevisited = -1;
+				this.lastX = x;
+				this.lastY = y;
+				return true;
+
+			}
+			else return false;
 		}
 
 		// Get direction from two positions, pos0 is start point, pos1 is end point
