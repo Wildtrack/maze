@@ -10,7 +10,7 @@ $(function() {
 			.extend(Input);
 
 	//not testing the model here, assume it works
-	AMaze.model.load('./mocks/maze2.json', function(loaded) {
+	AMaze.model.load('./mocks/maze3.json', function(loaded) {
 		var modelTest = loaded;
 
 		canvas.Scene.new({
@@ -22,7 +22,7 @@ $(function() {
 			},
 			ready: function(stage) {
 
-				this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':this,'stage':stage,'maze':modelTest});
+				this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':canvas,'scene':this,'stage':stage,'maze':modelTest});
 				this.mazeRenderer.drawMaze();
 
 				canvas.Input.keyUp(Input.Up, function(e) {

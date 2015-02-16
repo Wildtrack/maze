@@ -2,9 +2,10 @@ var AMaze = AMaze || {};
 AMaze.render = {
 	MazeRenderer: function(opts) {
 		this.style = {bg: '#fff', wall:'#000', entrance:'#0f0', exit:'#f00' ,width:null,height:null,padding:5,
-			spritemap:null, tileSize:[32,32]};
+			spritemap:null, cellSize:[64,64]};
 		this.canvas = null;
 		this.canvasEngine = null;
+		this.scene = null;
 		this.stage = null;
 		this.maze = null;
 		this.player = null;
@@ -13,10 +14,12 @@ AMaze.render = {
 		this.actualHeight = null;
 		this.cellWidth = null;
 		this.cellHeight = null;
+		this.displayMazeUL = [];
 
 		//opts should have a canvasengine object in it, the stage, and the maze object,
 		//a style object is optional
 		this.stage = opts.hasOwnProperty('stage')? opts.stage : null;
+		this.scene = opts.hasOwnProperty('scene')? opts.scene : null;
 		this.canvasEngine = opts.hasOwnProperty('canvasEngine')? opts.canvasEngine : null;
 		this.maze = opts.hasOwnProperty('maze')? opts.maze : null;
 
@@ -63,29 +66,38 @@ AMaze.render = {
 
 
 		//derived values
-		if(this.canvasEngine != null && this.maze != null)
+		if(this.scene != null && this.maze != null)
 		{
-			this.canvas = this.canvasEngine.getCanvas();
-			this.actualWidth = this.canvas.width-this.style.padding;
-			this.actualHeight = this.canvas.height-this.style.padding;
-			this.style.width = this.actualWidth-this.style.padding;
-			this.style.height = this.actualHeight-this.style.padding;
+			this.canvas = this.scene.getCanvas();
+			this.actualWidth = this.canvas.width;
+			this.actualHeight = this.canvas.height;
+			this.style.width = this.actualWidth-(this.style.padding*2);
+			this.style.height = this.actualHeight-(this.style.padding*2);
 
 			//maze-specific derived values
-			this.cellWidth = this.style.width/this.maze.width;
-			this.cellHeight = this.style.height/this.maze.height;
+			var minWidth = Math.min(this.style.width, this.style.height);
+			this.displayMazeUL = [(this.style.width-minWidth)/2 + this.style.padding, (this.style.height-minWidth)/2 + this.style.padding];
+
+			var maxCells = Math.max(this.maze.width, this.maze.height);
+
+			this.cellWidth = minWidth/maxCells;
+			this.cellHeight = minWidth/maxCells;
+
+			this.displayMazeUL[0] += (minWidth-this.cellWidth*this.maze.width)/2;
+			this.displayMazeUL[1] += (minWidth-this.cellHeight*this.maze.height)/2;
 		}
 
 		//setting up the stage
-		if(this.canvasEngine != null && this.stage != null) {
-			this.displayMaze = this.canvasEngine.createElement(this.actualWidth, this.actualHeight);
-			this.displayMaze.x = 0;
-			this.displayMaze.y = 0;
+		if(this.scene != null && this.stage != null) {
+			this.displayMaze = this.scene.createElement(this.style.cellSize[0]*this.maze.width, this.style.cellSize[1]*this.maze.height);
+			this.displayMaze.x = this.displayMazeUL[0];
+			this.displayMaze.y = this.displayMazeUL[1];
 			this.displayMaze.multiple = true;
         	this.stage.append(this.displayMaze);
 
-			this.player = this.canvasEngine.createElement(this.style.tileSize[0],this.style.tileSize[1]);
-			this.player.drawImage("player");
+			this.player = this.scene.createElement(this.cellWidth,this.cellHeight);
+			var pls = this.canvasEngine.Materials.get("player");
+			this.player.drawImage("player",  (this.cellWidth/2)-(pls.naturalWidth/2), (this.cellHeight/2)-(pls.naturalHeight/2));
         	this.stage.append(this.player);
 		}
 	}
@@ -94,28 +106,22 @@ AMaze.render = {
 //draw the initial maze on the canvas
 AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 	if(this.maze != null && this.displayMaze != null) {
-
-		//clearing the canvas
-		this.displayMaze.rect(0,0,this.actualWidth,this.actualHeight);
-		this.displayMaze.fillStyle=this.style.bg;
-		this.displayMaze.fill();
-
 		var self = this;
 
 		//need to decide between arbitrary lines and sprites here
-		if(spritemap == null)
+		if(this.style.spritemap == null)
 		{
 			//drawing entrance
 			this.displayMaze.fillStyle = this.style.entrance;
 			this.displayMaze.strokeStyle = this.style.entrance;
-			this.displayMaze.fillRect(this.style.padding + this.cellWidth*this.maze.start[0],this.style.padding + this.cellHeight*this.maze.start[1],
-				this.cellWidth, this.cellHeight);
+			this.displayMaze.fillRect(this.style.cellSize[0]*this.maze.start[0], this.style.cellSize[1]*this.maze.start[1],
+				this.style.cellSize[0], this.style.cellSize[1]);
 
 			//drawing exit
 			this.displayMaze.fillStyle = this.style.exit;
 			this.displayMaze.strokeStyle = this.style.exit;
-			this.displayMaze.fillRect((this.style.padding + this.cellWidth*this.maze.end[0]),(this.style.padding + this.cellHeight*this.maze.end[1]),
-				this.cellWidth, this.cellHeight);
+			this.displayMaze.fillRect( this.style.cellSize[0]*this.maze.end[0], this.style.cellSize[1]*this.maze.end[1],
+				this.style.cellSize[0], this.style.cellSize[1]);
 
 			var drawWall = function(x1,y1,x2,y2) {
 				self.displayMaze.moveTo(x1,y1);
@@ -132,27 +138,28 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 				{
 					if((this.maze.board[x][y] & AMaze.model.N_CONST) != AMaze.model.N_CONST)
 					{
-						drawWall((this.style.padding + this.cellWidth*x),(this.style.padding + this.cellHeight*y),
-							(this.style.padding + this.cellWidth*(x+1)),(this.style.padding + this.cellHeight*y));
+						drawWall( this.style.cellSize[0]*x, this.style.cellSize[1]*y,
+							this.style.cellSize[0]*(x+1), this.style.cellSize[1]*y );
 					}
 					if((this.maze.board[x][y] & AMaze.model.E_CONST) != AMaze.model.E_CONST)
 					{
-						drawWall((this.style.padding + this.cellWidth*(x+1)),(this.style.padding + this.cellHeight*y),
-							(this.style.padding + this.cellWidth*(x+1)),(this.style.padding + this.cellHeight*(y+1)));
+						drawWall( this.style.cellSize[0]*(x+1), this.style.cellSize[1]*y,
+							this.style.cellSize[0]*(x+1), this.style.cellSize[1]*(y+1) );
 					}
 					if((this.maze.board[x][y] & AMaze.model.S_CONST) != AMaze.model.S_CONST)
 					{
-						drawWall((this.style.padding+ this.cellWidth*x),(this.style.padding + this.cellHeight*(y+1)),
-							(this.style.padding + this.cellWidth*(x+1)),(this.style.padding + this.cellHeight*(y+1)));
+						drawWall( this.style.cellSize[0]*x, this.style.cellSize[1]*(y+1),
+							this.style.cellSize[0]*(x+1), this.style.cellSize[1]*(y+1) );
 					}
 					if((this.maze.board[x][y] & AMaze.model.W_CONST) != AMaze.model.W_CONST)
 					{
-						drawWall((this.style.padding + this.cellWidth*x),(this.style.padding + this.cellHeight*y),
-							(this.style.padding + this.cellWidth*x),(this.style.padding + this.cellHeight*(y+1)));
+						drawWall( this.style.cellSize[0]*x, this.style.cellSize[1]*y,
+							this.style.cellSize[0]*x, this.style.cellSize[1]*(y+1) );
 					}
 				}
 			}
 			this.displayMaze.closePath();
+			this.displayMaze.scaleTo( this.cellWidth/this.style.cellSize[0] );//needed / actual
 		}
 		else
 		{
@@ -165,8 +172,8 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 AMaze.render.MazeRenderer.prototype.refresh = function() {
 	//no need to do anything if canvas == null
 	if(this.canvas != null && this.player != null && this.maze != null) {
-		this.player.x = this.style.padding + (this.maze.currPos[0]*this.cellWidth);
-		this.player.y = this.style.padding + (this.maze.currPos[1]*this.cellHeight);
+		this.player.x = this.displayMazeUL[0] + (this.maze.currPos[0]*this.cellWidth);
+		this.player.y = this.displayMazeUL[1] + (this.maze.currPos[1]*this.cellHeight);
 
 		//maybe do trail things here
 	}
