@@ -17,7 +17,7 @@ $(function() {
 			name: "MyScene",
 			materials: {
 				images: {
-					player: "../images/smile.png"
+					player: "../images/knight.png"
 				}
 			},
 			ready: function(stage) {

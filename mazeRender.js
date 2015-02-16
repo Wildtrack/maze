@@ -15,6 +15,7 @@ AMaze.render = {
 		this.cellWidth = null;
 		this.cellHeight = null;
 		this.displayMazeUL = [];
+		this.scaleFactor = 1;
 
 		//opts should have a canvasengine object in it, the stage, and the maze object,
 		//a style object is optional
@@ -94,6 +95,7 @@ AMaze.render = {
 
 			this.displayMazeUL[0] += (minWidth-this.cellWidth*this.maze.width)/2;
 			this.displayMazeUL[1] += (minWidth-this.cellHeight*this.maze.height)/2;
+			this.scaleFactor = this.cellWidth/this.style.cellSize[0];
 		}
 
 		//setting up the stage
@@ -168,10 +170,9 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 				}
 			}
 			this.displayMaze.closePath();
-			var scaleFactor = this.cellWidth/this.style.cellSize[0];
-			this.displayMaze.scaleTo( scaleFactor );//needed / actual
-			this.displayMaze.x /= scaleFactor;
-			this.displayMaze.y /= scaleFactor;
+			this.displayMaze.scaleTo( this.scaleFactor );//needed / actual
+			this.displayMaze.x /= this.scaleFactor;
+			this.displayMaze.y /= this.scaleFactor;
 		}
 		else
 		{
