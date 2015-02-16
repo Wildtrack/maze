@@ -163,18 +163,15 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 					cellBeingDrawn.strokeStyle  = self.style.wall;
 					if((this.maze.board[x][y] & AMaze.model.N_CONST) != AMaze.model.N_CONST)
 					{
-						drawWall( 0, 0,
-							this.style.cellSize[0]*(x+1), 0 );
+						drawWall( 0, 0, this.style.cellSize[0], 0 );
 					}
 					if((this.maze.board[x][y] & AMaze.model.E_CONST) != AMaze.model.E_CONST)
 					{
-						drawWall( this.style.cellSize[0], 0,
-							this.style.cellSize[0], this.style.cellSize[1] );
+						drawWall( this.style.cellSize[0], 0, this.style.cellSize[0], this.style.cellSize[1] );
 					}
 					if((this.maze.board[x][y] & AMaze.model.S_CONST) != AMaze.model.S_CONST)
 					{
-						drawWall( 0, this.style.cellSize[1],
-							this.style.cellSize[0], this.style.cellSize[1] );
+						drawWall( 0, this.style.cellSize[1], this.style.cellSize[0], this.style.cellSize[1] );
 					}
 					if((this.maze.board[x][y] & AMaze.model.W_CONST) != AMaze.model.W_CONST)
 					{
