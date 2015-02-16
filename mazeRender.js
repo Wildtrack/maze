@@ -38,15 +38,18 @@ AMaze.render = {
 		//		tile:[(width of each gridbox),(height of each gridbox)], reg:[(x origin), (y origin)],
 		//		set:[(1st identifier starting from top left), (2nd identifier), ...],
 		//		cellSize:[(width of cell),(height of cell)],
-		//		cells:[...] }
+		//		cells:[...],
+		//		entrances:[...],
+		//		exits:[...] }
 		//cellSize gives the width and height of a cell in px, which should be the same as the tiles
 		//	added together
-		//cells is also dense and complicated
+		//cells is also dense and complicated (entrances and exits is the same structure, but defines
+		//	the look for entrance tiles and exit tiles, as opposed to normal ground tiles)
 		//each array location corresponds to the direction that the cell will indicate
 		//ex: 0 is no openings, 1 is opening to the north, 5 opening to the north and south, etc
 		//each array location is an array with tile objects in it:
 		//	[	{x:0,y:0,width:0,height:0, tiles:["gridtile1","gridtile2",...]},...	]
-		//x/y correspond to where the upper left corner of the image should start
+		//x/y correspond to where the upper left corner of the image should start relative to the tile's UL
 		//width/height indicate how big the tile should be scaled to fit, 0 or absent is ignored
 		//tiles gives a selection of tiles that could be used, corresponding to identifiers given in the spritemap set array
 		//if there is only one tile, it will always use that one, if there is more than one, it will choose randomly
@@ -60,6 +63,12 @@ AMaze.render = {
 		//	cells:[
 		//		[{x:0,y:0,width:0,height:0, tiles:["gridtile1","gridtile2",...]},... ],
 		//		[{x:0,y:0,width:0,height:0, tiles:["gridtile1","gridtile2",...]},... ],...}
+		//	],
+		//	entrances: [
+		//		...
+		//	],
+		//	exits: [
+		//		...
 		//	]
 		//}
 
