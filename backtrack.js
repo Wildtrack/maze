@@ -17,9 +17,13 @@ backtrack.model = function (opts)
 		// current cursor position
 		this.pointer = this.tree;
 
+		// last node has been reviisted?
+		this.nodeRevisited = false;
+		this.backtracked = false;
+
 		// path vector, last postion
 		this.currentDir = -1;
-		this.BacktrackDir = -1;
+		this.backtrackDir = -1;
 		this.lastX;
 		this.lastY;
 
@@ -31,7 +35,7 @@ backtrack.model = function (opts)
 			// root can only set be set up once
 			if (!this.tree)
 			{
-				this.pointer = (this.tree = new node(0, this.lastX = x, this.lastY = y, 0));
+				this.pointer = (this.tree = new trackNode(0, this.lastX = x, this.lastY = y, 0));
 			}
 		}
 
@@ -41,68 +45,120 @@ backtrack.model = function (opts)
 		//
 		this.onTrack = function(x, y) {
 
-			var currentDir;
+			var newDir;
 			//if cursor is moving to a new direction then add a new node
 			//Each time either x or y would be changed. If both are changed then something is wrong!
 			if (this.lastX != x && this.lastY != y)
 			{
-				console.log("x:"+x+ " y"+y); //something is wrong!
+				console.log("Unexpected move x:"+x+ " y"+y); //something is wrong!
 				return false;
 			}
-			else if (this.lastX != x) { //moves in x direction
-				
-				if (x > this.lastX) 
-				{
-					currentDir = 1; //moves to east
-				}
-				else 
-				{
-					currentDir = 3; //moves to west
-				}
-				this.lastX = x;
-
-			}
-			else if (this.lastY != y) { //moves in y direction
-
-				if (y > this.lastY) 
-				{console.log("triggered");
-					currentDir = 2; //move to south
-				}
-				else 
-				{
-					currentDir = 0; //move to north
-				}
-				this.lastY = y;
-
-			}
-			else {
+			else if (this.lastX == x && this.lastY == y) {
 				console.log("Cursor freezes"); //something is wrong too!
 				return false;
 			}
 
-			// if no initial direction, record the direction
-			if (this.currentDir == -1) 
-			{
-				this.currentDir = currentDir;
-				return false;
-			}
+			newDir = this.getDirection([this.lastX, this.lastY],[x,y]);
 
-			// check if cursor is backtracking
-			if (currentDir != this.currentDir)
+
+			// check if cursor direction changes
+			if (newDir != this.currentDir)
 			{
-				if (this.currentDir == backtrack.DIR_MAP[this.currentDir = currentDir]) // if cursor is moving backwards
+				// if a node has been revisted and cursor moves to its parent node --> BINGO!!!
+				if (this.nodeRevisited && newDir == this.backtrackDir)
 				{
+					this.pointer.head.child[backtrack.DIR_MAP[newDir]] = 0; //release child node from memory
+					this.pointer = this.pointer.head;
+
+					//check if hits another node 
+					if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
+					{
+						this.backtrackDir = this.pointer.direction; console.log("damn!");
+					}
+					else this.nodeRevisited = false;
+					
+					this.currentDir = newDir;
+					this.lastX = x;
+					this.lastY = y;
+					return true;
+				}
+				else if (!this.backtracked && this.currentDir == backtrack.DIR_MAP[newDir]) // if cursor is moving backwards or is on backtrack
+				{
+
+					//flag backtracked and set backtrack direction
+					this.currentDir = newDir;
+					this.backtrackDir = this.currentDir;
+					this.backtracked = true;
+
+					//if a node is revisited during backtracking, flag it
+					if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
+					{
+						this.nodeRevisited = true;
+						this.backtrackDir = this.pointer.direction; //assign parent's backtrack direction
+					}
+
+					this.lastX = x;
+					this.lastY = y;
 					return true;
 				}
 				else //if not moving backwards then create a new node
 				{
-					this.pointer = (this.pointer.child[this.currentDir = currentDir] = new node(this.pointer, x, y, this.currentDir));
+					var dir = backtrack.DIR_MAP[this.currentDir];
+					this.pointer = (this.pointer.child[dir] = new trackNode(this.pointer, this.lastX, this.lastY, this.currentDir));
+					this.backtrackDir = backtrack.DIR_MAP[this.currentDir = newDir]; //backtrack direction is always the opposite of current direction after a node is created
+				}
+				//this.currentDir = currentDir;
+			}
+			// if cursor keeps on going along backtrack
+			else if (newDir == this.backtrackDir)
+			{
+				//if a node is revisited during backtracking, flag it
+				if (x == this.pointer.pos[0] && y == this.pointer.pos[1])
+				{
+					this.nodeRevisited = true;
+					this.backtrackDir = this.pointer.direction; 
 				}
 
-				this.currentDir = currentDir;
+				this.lastX = x;
+				this.lastY = y;
+				return true;
 			}
 
+			this.lastX = x;
+			this.lastY = y;
+
 			return false;
+		}
+
+		// Get direction from two positions, pos0 is start point, pos1 is end point
+		// Will not check if pos0 and pos1 are on same spot! 
+		// Format is [x,y]
+		this.getDirection = function(pos0, pos1) {
+
+			if (pos0[0] != pos1[0]) { //moves in x direction
+				
+				if (pos1[0] > pos0[0]) 
+				{
+					return 1; //moves to east
+				}
+				else 
+				{
+					return 3; //moves to west
+				}
+
+			}
+			else if (pos0[1] != pos1[1]) { //moves in y direction
+
+				if (pos1[1] > pos0[1]) 
+				{
+					return 2; //move to south
+				}
+				else 
+				{
+					return 0; //move to north
+				}
+
+			}
 		}
 
 		// Search node that is located at <x,y>
@@ -153,7 +209,7 @@ backtrack.model = function (opts)
 // params: parentNode pointer to parent node
 // params: newDir, direction = this.direction[newDir]
 //
-var node = function (parentNode, x, y, newDir) {
+var trackNode = function (parentNode, x, y, newDir) {
 
 	//
 	// The direction points to its parent node
