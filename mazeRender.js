@@ -79,6 +79,7 @@ AMaze.render = {
 		if(this.scene != null && this.maze != null)
 		{
 			this.canvas = this.scene.getCanvas();
+			$('#'+this.canvas.element.id).css('background-color', this.style.bg);
 			this.actualWidth = this.canvas.width;
 			this.actualHeight = this.canvas.height;
 			this.style.width = this.actualWidth-(this.style.padding*2);
@@ -90,12 +91,12 @@ AMaze.render = {
 
 			var maxCells = Math.max(this.maze.width, this.maze.height);
 
-			this.cellWidth = Math.pow(2, Math.floor(Math.log(minWidth/maxCells)/Math.log(2)));
+			//this.scaleFactor = Math.pow(2, Math.floor(Math.log(minWidth/maxCells)/Math.log(2)));
+			this.cellWidth = this.scaleFactor*64;
 			this.cellHeight = this.cellWidth;
 
 			this.displayMazeUL[0] += (minWidth-this.cellWidth*this.maze.width)/2;
 			this.displayMazeUL[1] += (minWidth-this.cellHeight*this.maze.height)/2;
-			this.scaleFactor = this.cellWidth/this.style.cellSize[0];
 		}
 
 		//setting up the stage
@@ -170,9 +171,9 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 				}
 			}
 			this.displayMaze.closePath();
-			this.displayMaze.scaleTo( this.scaleFactor );//needed / actual
-			this.displayMaze.x /= this.scaleFactor;
-			this.displayMaze.y /= this.scaleFactor;
+			//this.displayMaze.scaleTo( this.scaleFactor );//needed / actual
+			//this.displayMaze.x /= this.scaleFactor;
+			//this.displayMaze.y /= this.scaleFactor;
 		}
 		else
 		{
