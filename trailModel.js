@@ -14,6 +14,9 @@ var trailModel = {
                 this.lastX = 0;
                 this.lastY = 0;
 
+                //Debug mode on
+                this.debugOn = false;
+
 		for( var x = trailModel.width; x--; )
 		{
 			trailModel.theBoard.push([]);
@@ -41,10 +44,10 @@ var trailModel = {
 trailModel.create.prototype.exists = function(x, y) 
 {
 
-        var flag = !trailModel.backTrackOn || (flag = this.trace.onTrack(x, y));
+        flag = !trailModel.backTrackOn || (flag = this.trace.onTrack(x, y));
         var data = trailModel.theBoard[x][y];
 
-        console.log(x+","+y+":"+flag);
+        if (this.debugOn) console.log(x+","+y+":"+ flag + ", dot exists: "+ (data != 0));
 
         if (data)
         {
@@ -79,6 +82,7 @@ trailModel.create.prototype.makeTrail = function(stage, cursor)
 
                 if (this.lastDot != 0) //if last dot is saved turn it on
                 {
+                        trailModel.theBoard[this.lastX][this.lastY] = this.lastDot;
                         stage.prepend(this.lastDot);
                         this.lastDot = 0; 
                 }
