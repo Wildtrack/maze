@@ -46,7 +46,7 @@ backtrack.model = function (opts)
 		//
 		this.onTrack = function(x, y) {
 
-			if (this.debugOn) console.log("backtrack? "+this.backtracked+" backtrack dir: "+this.backtrackDir);
+			if (this.debugOn) console.log("backtrack? "+this.backtracked+" backtrack dir: "+this.backtrackDir+ " current dir: "+this.currentDir);
 
 			//fault-safe
 			if (!this.tree){

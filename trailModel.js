@@ -1,6 +1,6 @@
 var trailModel = {
         width: 20, height: 20, overlayEffectOn: false, backTrackOn: true,
-        theBoard: [],
+        theBoard: [], userData: {ID: "", timer: 0, step: 0, level: 0},
         create: function(trailDot, opts) {
                 // trailModel and mazeModel should share same opts object
         	//
@@ -48,24 +48,19 @@ trailModel.create.prototype.exists = function(x, y)
 
         if (data)
         {
-                // check if it is backtrack
+                // check whether it is backtrack
                 if (flag) {
-                        
-                        data.remove();
-                        trailModel.theBoard[x][y] = 0;
 
-                        // remove previous dot if exists in backtrack
-                        if (this.lastDot != 0)
-                        {
-                                this.lastDot.remove();
-                                trailModel.theBoard[this.lastX][this.lastY] = 0;
-                                this.lastDot = 0;
-                        }
+                        this.lastDot = data;
+
+                        data.remove();
+                        trailModel.theBoard[this.lastX = x][this.lastY = y] = 0;
+
                 } 
 
                 // create some effect when track overlays
                 if (trailModel.overlayEffectOn) {
-                        
+                        //will be worked on...
                 }
 
         	return true;
@@ -81,9 +76,40 @@ trailModel.create.prototype.makeTrail = function(stage, cursor)
         var y1 = y/32;
 
         if (!this.exists(x1, y1)) {
+
+                if (this.lastDot != 0) //if last dot is saved turn it on
+                {
+                        stage.prepend(this.lastDot);
+                        this.lastDot = 0; 
+                }
+
                 this.lastDot = new this.dot(x, y);
         	trailModel.theBoard[this.lastX = x1][this.lastY = y1] = this.lastDot;
-        	stage.prepend(this.lastDot);
+        	//stage.prepend(this.lastDot);
         }
 };
+
+//
+// User data model
+//
+trailModel.userData = function() {
+
+        this.startTime = 0;
+
+        this.startTimer = function() {
+                this.startTime = Date.getTime();
+        }
+
+        this.Step = function() {
+                ++trailModel.userData.step;
+        }
+
+        this.setLevel = function(level) {
+                trailModel.userData.level = level;
+        }
+
+        this.getGameTime = function() {
+                return (trailModel.userData.timer = (Date.getTime() - this.StartTime)/1000);
+        }
+}
 
