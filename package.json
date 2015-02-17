@@ -1,0 +1,18 @@
+{
+  "name": "test",
+  "version": "0.0.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "./node_modules/mocha/bin/mocha"
+  },
+  "author": "Matthew Neal",
+  "license": "ISC",
+  "devDependencies": {
+    "chai": "^1.9.1",
+    "istanbul": "^0.3.5",
+    "jsdom": "^3.1.1",
+    "mocha": "^2.1.0",
+    "jquery": "^2.1.3"
+  }
+}
