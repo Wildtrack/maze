@@ -1,7 +1,7 @@
 //Needed to include this to make node function with the current setup
 //Deals with a weird issue of jquery needs a window, apparently jsdom
 //solves that problem.
-var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+//var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
 
 var AMaze = (function(AMaze) {
     AMaze.model = {
@@ -144,4 +144,4 @@ var AMaze = (function(AMaze) {
     return AMaze;
 }(AMaze || {}));
 
-module.exports = AMaze.model;
+//module.exports = AMaze.model;
