@@ -15,7 +15,7 @@ AMaze.render = {
 		this.actualHeight = null;
 		this.cellWidth = null;
 		this.cellHeight = null;
-		this.displayMazeUL = [];
+		this.displayMazeUL = [0,0];
 		this.pcUL = [];
 		this.scaleFactor = 1;
 
@@ -81,6 +81,8 @@ AMaze.render = {
 		//derived values
 		if(this.scene != null && this.maze != null)
 		{
+			this.cacheCanvas.width = this.maze.width*this.style.cellSize[0];
+			this.cacheCanvas.height = this.maze.height*this.style.cellSize[1];
 			this.canvas = this.scene.getCanvas();
 			//$('#'+this.canvas.element.id).css('background-color', this.style.bg);
 			this.actualWidth = this.canvas.width;
@@ -181,12 +183,26 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 		//new viewport movement:
 		//pcUL[0] = mapUL[0]>=0 || mapUL[0]+mapW <= vpW? mapUL[0] + (cellsize[0]*pcLoc[0]) : (vpW/2-pcW/2);
 		//mapUL[0] = ((vpW/2)-(pcW/2))-(pcLoc[0]*cellsize[0]);
+		var pls = this.canvasEngine.Materials.get("player"),
+		tmpMazeUL = [(this.actualWidth/2)-(pls.naturalWidth/2)-(this.maze.currPos[0]*this.style.cellSize[0]),
+								(this.actualHeight/2)-(pls.naturalHeight/2)-(this.maze.currPos[1]*this.style.cellSize[1])];
+		if(tmpMazeUL[0] != this.displayMazeUL[0] || tmpMazeUL[1] != this.displayMazeUL[1])
+		{
+			this.displayMazeUL = tmpMazeUL;
+			//redraw
+			var bgCtx = this.bgCanvas.getContext('2d'),
+			cacheCoords = [Math.max(this.maze.currPos[0]*this.style.cellSize[0]-(this.actualWidth/2-pls.naturalWidth/2),0), Math.max(this.maze.currPos[1]*this.style.cellSize[1]-(this.actualHeight/2-pls.naturalHeight/2),0)];
+			bgCtx.clearRect(0,0,this.bgCanvas.width, this.bgCanvas.height);
+			//cropping out a section of the cached image
+			bgCtx.drawImage(this.cacheCanvas,
+				cacheCoords[0], cacheCoords[1], Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]),
+				Math.max(this.displayMazeUL[0],0), Math.max(this.displayMazeUL[1],0), Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]));
+		}
 
-
-
-
-		this.player.x = this.displayMazeUL[0] + (this.maze.currPos[0]*this.cellWidth);
-		this.player.y = this.displayMazeUL[1] + (this.maze.currPos[1]*this.cellHeight);
+		this.player.x = this.displayMazeUL[0] >= 0 || this.displayMazeUL[0]+(this.maze.width*this.style.cellSize[0]) >= this.actualWidth?
+			this.displayMazeUL[0]+ this.maze.currPos[0]*this.style.cellSize[0]	:	this.actualWidth/2 - pls.naturalWidth/2;
+		this.player.y = this.displayMazeUL[1] >= 0 || this.displayMazeUL[1]+(this.maze.height*this.style.cellSize[0]) >= this.actualHeight?
+			this.displayMazeUL[1]+ this.maze.currPos[1]*this.style.cellSize[1]	:	this.actualHeight/2 - pls.naturalHeight/2;
 
 		//maybe do trail things here
 	}
