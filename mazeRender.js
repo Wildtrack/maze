@@ -6,6 +6,7 @@ AMaze.render = {
 		this.canvas = null;
 		this.canvasEngine = null;
 		this.bgCanvas = null;
+		this.cacheCanvas = document.createElement('canvas');
 		this.scene = null;
 		this.stage = null;
 		this.maze = null;
@@ -15,6 +16,7 @@ AMaze.render = {
 		this.cellWidth = null;
 		this.cellHeight = null;
 		this.displayMazeUL = [];
+		this.pcUL = [];
 		this.scaleFactor = 1;
 
 		//opts should have a canvasengine object in it, the stage, and the maze object,
@@ -119,7 +121,7 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 	{
 		var self = this;
 
-		var cellBeingDrawn = [0,0], ctx = this.bgCanvas.getContext('2d'),
+		var cellBeingDrawn = [0,0], ctx = this.cacheCanvas.getContext('2d'),
 		drawWall = function(x1,y1,x2,y2) {
 			ctx.moveTo(AMaze.render.fastRound(cellBeingDrawn[0]+x1), AMaze.render.fastRound(cellBeingDrawn[1]+y1));
 			ctx.lineTo(AMaze.render.fastRound(cellBeingDrawn[0]+x2), AMaze.render.fastRound(cellBeingDrawn[1]+y2));
@@ -127,13 +129,13 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 		};
 
 		//drawing entrance
-		cellBeingDrawn = [this.displayMazeUL[0]+ this.maze.start[0]*this.style.cellSize[0], this.displayMazeUL[1]+ this.maze.start[1]*this.style.cellSize[1]];
+		cellBeingDrawn = [this.maze.start[0]*this.style.cellSize[0], this.maze.start[1]*this.style.cellSize[1]];
 		ctx.fillStyle = this.style.entrance;
 		ctx.strokeStyle = this.style.entrance;
 		ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0], this.style.cellSize[1]);
 
 		//drawing exit
-		cellBeingDrawn = [this.displayMazeUL[0]+ this.maze.end[0]*this.style.cellSize[0], this.displayMazeUL[1]+ this.maze.end[1]*this.style.cellSize[1]];
+		cellBeingDrawn = [this.maze.end[0]*this.style.cellSize[0], this.maze.end[1]*this.style.cellSize[1]];
 		ctx.fillStyle = this.style.exit;
 		ctx.strokeStyle = this.style.exit;
 		ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0], this.style.cellSize[1]);
@@ -145,7 +147,7 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 		{
 			for( y = 0; y < this.maze.height; y++)
 			{
-				cellBeingDrawn = [this.displayMazeUL[0]+ x*this.style.cellSize[0],this.displayMazeUL[1]+ y*this.style.cellSize[1]];
+				cellBeingDrawn = [x*this.style.cellSize[0],y*this.style.cellSize[1]];
 				if(! ((x == this.maze.start[0] && y == this.maze.start[1]) || ( x == this.maze.end[0] && y == this.maze.end[1])) )
 					ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0],this.style.cellSize[1]);
 				//ctx.beginPath();
@@ -176,6 +178,13 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 AMaze.render.MazeRenderer.prototype.refresh = function() {
 	//no need to do anything if canvas == null
 	if(this.canvas != null && this.player != null && this.maze != null) {
+		//new viewport movement:
+		//pcUL[0] = mapUL[0]>=0 || mapUL[0]+mapW <= vpW? mapUL[0] + (cellsize[0]*pcLoc[0]) : (vpW/2-pcW/2);
+		//mapUL[0] = ((vpW/2)-(pcW/2))-(pcLoc[0]*cellsize[0]);
+
+
+
+
 		this.player.x = this.displayMazeUL[0] + (this.maze.currPos[0]*this.cellWidth);
 		this.player.y = this.displayMazeUL[1] + (this.maze.currPos[1]*this.cellHeight);
 
