@@ -9,7 +9,10 @@ canvas.Scene.new({
     materials: {
         images: {
             smile: "images/smile.png",
-            trail: "images/trail_dot1.png"
+            trail1: "images/trail_dot1.png",
+            trail2: "images/trail_dot2.png",
+            trail3: "images/trail_dot3.png",
+            trail4: "images/trail_dot4.png"
         }
     },
     ready: function(stage) {
@@ -25,7 +28,7 @@ canvas.Scene.new({
         //Invoke trailModel and pass trail dot object
         var theTrail = new trailModel.create(function (x, y) {
             trail = thisThing.createElement(16,16);
-            trail.drawImage("trail");
+            trail.drawImage("trail2");
             trail.x = x;
             trail.y = y;
             return trail;
