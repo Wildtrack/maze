@@ -5,10 +5,3 @@ node_js:
 branches:
   only:
   - autobuild
-#blacklist
-branches:
-  except:
-  - backtrack
-  - prettiermaze
-  - master
-  - modelload
