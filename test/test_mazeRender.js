@@ -17,7 +17,8 @@ $(function() {
 			name: "MyScene",
 			materials: {
 				images: {
-					player: "../images/knight.png"
+					player: "../images/knight.png",
+					tileset: "../images/dungeon_tiles_compact_and_varied.png"
 				}
 			},
 			ready: function(stage) {
