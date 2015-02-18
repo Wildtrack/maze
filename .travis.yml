@@ -1,0 +1,14 @@
+language: node_js
+node_js:
+  - "0.10"
+#whitelist
+branches:
+  only:
+  - autobuild
+#blacklist
+branches:
+  except:
+  - backtrack
+  - prettiermaze
+  - master
+  - modelload
