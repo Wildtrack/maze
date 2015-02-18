@@ -10,7 +10,7 @@ $(function() {
 			.extend(Input);
 
 	//not testing the model here, assume it works
-	AMaze.model.load('./mocks/maze1.json', function(loaded) {
+	AMaze.model.load('./mocks/maze3.json', function(loaded) {
 		var modelTest = loaded;
 
 		canvas.Scene.new({
