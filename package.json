@@ -13,6 +13,6 @@
     "istanbul": "*",
     "jsdom": "*",
     "mocha": "*",
-    "jquery": "*",
+    "jquery": "*"
   }
 }
