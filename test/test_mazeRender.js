@@ -22,7 +22,7 @@ $(function() {
 			},
 			ready: function(stage) {
 
-				this.mazeRenderer = new AMaze.render.MazeRenderer({'canvasEngine':canvas,'scene':this,'stage':stage,'maze':modelTest});
+				this.mazeRenderer = new AMaze.render.MazeRenderer({'bgcanvas':$('#bgcanvas')[0],'canvasEngine':canvas,'scene':this,'stage':stage,'maze':modelTest});
 				this.mazeRenderer.drawMaze();
 
 				canvas.Input.keyUp(Input.Up, function(e) {

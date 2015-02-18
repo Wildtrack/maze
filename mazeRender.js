@@ -5,6 +5,7 @@ AMaze.render = {
 			spritemap:null, cellSize:[64,64]};
 		this.canvas = null;
 		this.canvasEngine = null;
+		this.bgCanvas = null;
 		this.scene = null;
 		this.stage = null;
 		this.maze = null;
@@ -23,6 +24,7 @@ AMaze.render = {
 		this.scene = opts.hasOwnProperty('scene')? opts.scene : null;
 		this.canvasEngine = opts.hasOwnProperty('canvasEngine')? opts.canvasEngine : null;
 		this.maze = opts.hasOwnProperty('maze')? opts.maze : null;
+		this.bgCanvas = opts.hasOwnProperty('bgcanvas')? opts.bgcanvas : null;
 
 		//style options
 		var tempStyleObj = opts.hasOwnProperty('style')? opts.style : null;
@@ -79,7 +81,7 @@ AMaze.render = {
 		if(this.scene != null && this.maze != null)
 		{
 			this.canvas = this.scene.getCanvas();
-			$('#'+this.canvas.element.id).css('background-color', this.style.bg);
+			//$('#'+this.canvas.element.id).css('background-color', this.style.bg);
 			this.actualWidth = this.canvas.width;
 			this.actualHeight = this.canvas.height;
 			this.style.width = this.actualWidth-(this.style.padding*2);
@@ -102,18 +104,21 @@ AMaze.render = {
 		//setting up the stage
 		if(this.scene != null && this.stage != null) {
 			this.displayMaze = [];
-			for( var x = this.maze.width; x--; )
+			if(this.bgCanvas === null)
 			{
-				this.displayMaze.push([]);
-				for( var y = this.maze.height; y--; )
+				for( var x = this.maze.width; x--; )
 				{
-					var idx = this.maze.width-x-1,
-					newEle = this.scene.createElement(this.style.cellSize[0], this.style.cellSize[1]);
-					newEle.x = this.displayMazeUL[0] + ((this.displayMaze.length-1)*this.style.cellSize[0]);
-					newEle.y = this.displayMazeUL[1] + (this.displayMaze[idx].length*this.style.cellSize[1]);
-					newEle.multiple = true;
-        			this.stage.append(newEle);
-					this.displayMaze[idx].push(newEle);
+					this.displayMaze.push([]);
+					for( var y = this.maze.height; y--; )
+					{
+						var idx = this.maze.width-x-1,
+						newEle = this.scene.createElement(this.style.cellSize[0], this.style.cellSize[1]);
+						newEle.x = this.displayMazeUL[0] + ((this.displayMaze.length-1)*this.style.cellSize[0]);
+						newEle.y = this.displayMazeUL[1] + (this.displayMaze[idx].length*this.style.cellSize[1]);
+						newEle.multiple = true;
+						this.stage.append(newEle);
+						this.displayMaze[idx].push(newEle);
+					}
 				}
 			}
 
@@ -127,40 +132,97 @@ AMaze.render = {
 
 //draw the initial maze on the canvas
 AMaze.render.MazeRenderer.prototype.drawMaze = function() {
-	if(this.maze != null && this.displayMaze != null) {
+	if(this.maze != null && this.displayMaze != null)
+	{
 		var self = this;
-
-		//need to decide between arbitrary lines and sprites here
-		if(this.style.spritemap == null)
+		if(this.bgCanvas === null)
 		{
-			var cellBeingDrawn = this.displayMaze[this.maze.start[0]][this.maze.start[1]];
+			//need to decide between arbitrary lines and sprites here
+			if(this.style.spritemap == null)
+			{
+				var cellBeingDrawn;
 
-			//drawing entrance
-			cellBeingDrawn.fillStyle = this.style.entrance;
-			cellBeingDrawn.strokeStyle = this.style.entrance;
-			cellBeingDrawn.fillRect(0, 0, this.style.cellSize[0], this.style.cellSize[1]);
+				var drawWall = function(x1,y1,x2,y2) {
+					cellBeingDrawn.moveTo(x1,y1);
+					cellBeingDrawn.lineTo(x2,y2);
+					cellBeingDrawn.stroke();
+				};
 
-			cellBeingDrawn = this.displayMaze[this.maze.end[0]][this.maze.end[1]];
+				//drawing the maze
+				for( x = 0; x < this.maze.width; x++)
+				{
+					for( y = 0; y < this.maze.height; y++)
+					{
+						cellBeingDrawn = this.displayMaze[x][y];
+						cellBeingDrawn.fillStyle = this.style.bg;
+						cellBeingDrawn.fillRect(0,0, this.style.cellSize[0],this.style.cellSize[1]);
+						cellBeingDrawn.beginPath();
+						cellBeingDrawn.strokeStyle  = self.style.wall;
+						if((this.maze.board[x][y] & AMaze.model.N_CONST) != AMaze.model.N_CONST)
+						{
+							drawWall( 0, 0, this.style.cellSize[0], 0 );
+						}
+						if((this.maze.board[x][y] & AMaze.model.E_CONST) != AMaze.model.E_CONST)
+						{
+							drawWall( this.style.cellSize[0], 0, this.style.cellSize[0], this.style.cellSize[1] );
+						}
+						if((this.maze.board[x][y] & AMaze.model.S_CONST) != AMaze.model.S_CONST)
+						{
+							drawWall( 0, this.style.cellSize[1], this.style.cellSize[0], this.style.cellSize[1] );
+						}
+						if((this.maze.board[x][y] & AMaze.model.W_CONST) != AMaze.model.W_CONST)
+						{
+							drawWall( 0, 0, 0, this.style.cellSize[1] );
+						}
+						cellBeingDrawn.closePath();
+					}
+				}
 
-			//drawing exit
-			cellBeingDrawn.fillStyle = this.style.exit;
-			cellBeingDrawn.strokeStyle = this.style.exit;
-			cellBeingDrawn.fillRect(0, 0, this.style.cellSize[0], this.style.cellSize[1]);
+				//drawing entrance
+				cellBeingDrawn = this.displayMaze[this.maze.start[0]][this.maze.start[1]];
+				cellBeingDrawn.fillStyle = this.style.entrance;
+				cellBeingDrawn.strokeStyle = this.style.entrance;
+				cellBeingDrawn.fillRect(0, 0, this.style.cellSize[0], this.style.cellSize[1]);
 
-			var drawWall = function(x1,y1,x2,y2) {
-				cellBeingDrawn.moveTo(x1,y1);
-				cellBeingDrawn.lineTo(x2,y2);
-				cellBeingDrawn.stroke();
+				//drawing exit
+				cellBeingDrawn = this.displayMaze[this.maze.end[0]][this.maze.end[1]];
+				cellBeingDrawn.fillStyle = this.style.exit;
+				cellBeingDrawn.strokeStyle = this.style.exit;
+				cellBeingDrawn.fillRect(0, 0, this.style.cellSize[0], this.style.cellSize[1]);
+				//this.displayMaze.scaleTo( this.scaleFactor );//needed / actual
+				//this.displayMaze.x /= this.scaleFactor;
+				//this.displayMaze.y /= this.scaleFactor;
+			}
+			else
+			{
+				//draw with sprites
+			}
+		}
+		else //drawing arbitrarily
+		{
+			var cellBeingDrawn = [0,0], ctx = this.bgCanvas.getContext('2d'),
+			drawWall = function(x1,y1,x2,y2) {
+				ctx.moveTo(cellBeingDrawn[0]+x1, cellBeingDrawn[1]+y1);
+				ctx.lineTo(cellBeingDrawn[0]+x2, cellBeingDrawn[1]+y2);
+				ctx.stroke();
 			};
 
 			//drawing the maze
+			ctx.fillStyle = this.style.bg;
+			ctx.strokeStyle = self.style.wall;
+			//debug
+			ctx.moveTo(200,200);
+			ctx.lineTo(300,300);
+			ctx.stroke();
+			//debug
 			for( x = 0; x < this.maze.width; x++)
 			{
 				for( y = 0; y < this.maze.height; y++)
 				{
-					cellBeingDrawn = cellBeingDrawn = this.displayMaze[x][y];
-					cellBeingDrawn.beginPath();
-					cellBeingDrawn.strokeStyle  = self.style.wall;
+					cellBeingDrawn = [this.displayMazeUL[0]+ x*this.style.cellSize[0],this.displayMazeUL[1]+ y*this.style.cellSize[1]];
+					ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0],this.style.cellSize[1]);
+					ctx.beginPath();
+
 					if((this.maze.board[x][y] & AMaze.model.N_CONST) != AMaze.model.N_CONST)
 					{
 						drawWall( 0, 0, this.style.cellSize[0], 0 );
@@ -177,16 +239,21 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 					{
 						drawWall( 0, 0, 0, this.style.cellSize[1] );
 					}
-					cellBeingDrawn.closePath();
+					ctx.closePath();
 				}
 			}
-			//this.displayMaze.scaleTo( this.scaleFactor );//needed / actual
-			//this.displayMaze.x /= this.scaleFactor;
-			//this.displayMaze.y /= this.scaleFactor;
-		}
-		else
-		{
-			//draw with sprites
+
+			//drawing entrance
+			cellBeingDrawn = [this.displayMazeUL[0]+ this.maze.start[0]*this.style.cellSize[0], this.displayMazeUL[1]+ this.maze.start[1]*this.style.cellSize[1]];
+			ctx.fillStyle = this.style.entrance;
+			ctx.strokeStyle = this.style.entrance;
+			ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0], this.style.cellSize[1]);
+
+			//drawing exit
+			cellBeingDrawn = [this.displayMazeUL[0]+ this.maze.end[0]*this.style.cellSize[0], this.displayMazeUL[1]+ this.maze.end[1]*this.style.cellSize[1]];
+			ctx.fillStyle = this.style.exit;
+			ctx.strokeStyle = this.style.exit;
+			ctx.fillRect(cellBeingDrawn[0],cellBeingDrawn[1], this.style.cellSize[0], this.style.cellSize[1]);
 		}
 	}
 };
