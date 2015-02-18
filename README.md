@@ -2,19 +2,23 @@
 Repo for Maze game
 
 ##Prerequisites
-This is only functioning in Firefox currently.  Chrome requires a series of steps to run the beta version of the sotware that is pointlessly difficult.
+Due to a limitation in Chrome's origin policy handling of files, the project is most easily viewed in Firefox or Internet Explorer 11.
 
 ##Usage
-To run the current iteration of the game do the following:
+To run the current iteration of the game (in IE11 or Firefox) do the following:
 
 - Clone the repo:
 	
     `git clone https://github.com/CSC510-2015-Axitron/maze.git`
 
-- Open index.html in Firefox in the main directory
+- Open index.html in the main directory
 
-- Alternatively open index.html in Firefox from the test directory to run current test framework.
+- Alternatively open index.html from the test directory to run current test framework.
 
 - Use the arrow keys to move around the board.
 
-- That's all it does right now!
+To run under Chrome:
+
+- Perform the same cloning step into a web host directory (such as NCSU's www4 public html space)
+
+- It will not run locally unless you completely disable same-origin-policy restrictions in Chrome, which applies to the entire browser, not per tab
