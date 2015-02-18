@@ -1,8 +1,8 @@
-# Maze
+# Maze [![Build Status](https://travis-ci.org/CSC510-2015-Axitron/maze.svg?branch=autobuild)](https://travis-ci.org/CSC510-2015-Axitron/maze)
+
 Repo for Maze game
 
-##Prerequisites 
-[![Build Status](https://travis-ci.org/CSC510-2015-Axitron/maze.svg?branch=autobuild)](https://travis-ci.org/CSC510-2015-Axitron/maze)
+##Prerequisites
 This is only functioning in Firefox currently.  Chrome requires a series of steps to run the beta version of the sotware that is pointlessly difficult.
 
 ##Usage
