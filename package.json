@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "./node_modules/mocha/bin/mocha"
+    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u bdd -R list"
   },
   "author": "Matthew Neal",
   "license": "ISC",
