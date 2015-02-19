@@ -48,6 +48,7 @@ $(function() {
 		});
 		canvas.ready().Scene.call("MyScene");
 	});
+<<<<<<< HEAD
 });
 
 $(window).on('keydown', function(e) {
@@ -55,3 +56,6 @@ $(window).on('keydown', function(e) {
 		e.preventDefault();
 	}
 }).scrollTop(0).scrollLeft(0);
+=======
+});
+>>>>>>> mazerender
