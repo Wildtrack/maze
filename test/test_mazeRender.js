@@ -53,28 +53,48 @@ $(function() {
 						 "g_flat_w_3",		"g_flat_7",	 "g_flat_8",  "g_flat_9",  "g_flat_e_3",	  "g_isth_jut_n",    "g_isth_jut_w",  "g_isth_jut_e",    "g_door_open",   "g_door_wood",      "g_door_gate",      "w_riv_corner_nw","w_riv_flat_ew",   "w_riv_corner_ne","w_riv_corner_sw", "w_riv_flat_ew",    "w_riv_corner_se",   "g_wall_base",  "g_wall_continuing","blank",         "blank",
 						 "g_flat_corner_sw","g_flat_s_1","g_flat_s_2","g_flat_s_3","g_flat_corner_se","g_isth_jut_s",    "g_fall_lg",     "g_isth_island",   "w_riv_open_1",  "w_riv_open_2",     "w_riv_open_gate",  "w_riv_end_n",    "w_riv_end_s",     "w_riv_end_w",    "w_riv_end_e",     "w_isth_jut_w",     "w_isth_jut_e",      "blank",        "g_fall_sm",        "blank",         "blank"],
 					cells:[
+						//0: none
 						[	{x:16,y:16, tiles:["g_flat_corner_nw"]},{x:32,y:16, tiles:["g_flat_corner_ne"]},
 							{x:16,y:32, tiles:["g_flat_corner_sw"]},{x:32,y:32, tiles:["g_flat_corner_se"]},
 							{x:16,y:48, tiles:["g_fall_lg"]},       {x:32,y:48, tiles:["g_fall_lg"]}],
+						//1: n
 						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
 							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
 							{x:16,y:32, tiles:["g_flat_corner_sw"]},                    {x:32,y:32, tiles:["g_flat_corner_se"]},
 							{x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}],
+						//2: e
 						[	{x:16,y:16, tiles:["g_flat_corner_nw"]},{x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
 							{x:16,y:32, tiles:["g_flat_corner_sw"]},{x:32,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
 							{x:16,y:48, tiles:["g_fall_lg"]},       {x:32,y:48, tiles:["g_fall_lg"]},                           {x:48,y:48, tiles:["g_fall_lg"]}],
+						//3: n | e
 						[],
+						//4: s
+						[	{x:16,y:16, tiles:["g_flat_corner_nw"]},                    {x:32,y:16, tiles:["g_flat_corner_ne"]},
+							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
+							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]}],
+						//5: n | s
 						[],
+						//6: e | s
 						[],
+						//7: n | e | s
 						[],
+						//8: w
+						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_corner_ne"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_corner_se"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}],
+						//9: n | w
 						[],
+						//10: e | w
 						[],
+						//11: n | e | w
 						[],
+						//12: s | w
 						[],
+						//13: n | s | w
 						[],
+						//14: e | s | w
 						[],
-						[],
-						[],
+						//15: n | e | s | w
 						[]
 					],
 					entrances:[],
