@@ -30,7 +30,7 @@ AMaze.render = {
 		if(tempStyleObj != null) {
 			for(var key in tempStyleObj) {
 				if(this.style.hasOwnProperty(key)) {
-					this.style.key = tempStyleObj.key;
+					this.style[key] = tempStyleObj[key];
 				}
 			}
 		}
@@ -116,7 +116,7 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 	if(this.maze != null)
 	{
 		var self = this, cellBeingDrawn = [0,0], ctx = this.cacheCanvas.getContext('2d');
-		if(this.spritemap != null)
+		if(this.style.spritemap != null)
 		{
 			var tilesetImage = this.canvasEngine.Materials.get(this.spritemap.image),
 			tiles = [];

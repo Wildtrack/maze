@@ -59,8 +59,8 @@ $(function() {
 							{x:16,y:48, tiles:["g_fall_lg"]},       {x:32,y:48, tiles:["g_fall_lg"]}
 						],
 						//1: n
-						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
+						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x:16,y:32, tiles:["g_flat_corner_sw"]},                    {x:32,y:32, tiles:["g_flat_corner_se"]},
 							{x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}
 						],
@@ -70,32 +70,32 @@ $(function() {
 							{x:16,y:48, tiles:["g_fall_lg"]},       {x:32,y:48, tiles:["g_fall_lg"]},                           {x:48,y:48, tiles:["g_fall_lg"]}
 						],
 						//3: n | e
-						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
+						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_icorner_sw"]},                   {x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
 							{x:16,y:32, tiles:["g_flat_corner_sw"]},                    {x:32,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
 							{x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]},                           {x:48,y:48, tiles:["g_fall_lg"]}
 						],
 						//4: s
 						[	{x:16,y:16, tiles:["g_flat_corner_nw"]},                    {x:32,y:16, tiles:["g_flat_corner_ne"]},
-							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]}
+							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
 						],
 						//5: n | s
-						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]}
+						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
 						],
 						//6: e | s
 						[	{x:16,y:16, tiles:["g_flat_corner_nw"]},                    {x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
 							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_icorner_nw"]},                   {x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
-							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},{x:48,y:48, tiles:["g_fall_lg"]}
+							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},{x:48,y:48, tiles:["g_fall_lg"]}
 						],
 						//7: n | e | s
-						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
+						[	{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x:16,y:16, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:16, tiles:["g_flat_icorner_sw"]},                   {x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
 							{x:16,y:32, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:32, tiles:["g_flat_icorner_nw"]},                   {x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
-							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},{x:48,y:48, tiles:["g_fall_lg"]}
+							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},{x:48,y:48, tiles:["g_fall_lg"]}
 						],
 						//8: w
 						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_corner_ne"]},
@@ -103,35 +103,60 @@ $(function() {
 							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}
 						],
 						//9: n | w
-						[	                                                            {x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
-							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},                   {x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_2"]},
+						[	                                                            {x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},                   {x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_corner_se"]}
 						],
 						//10: e | w
 						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
 							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
-							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]},                           {x:48,y:48, tiles:["g_fall_lg"]}
 						],
 						//11: n | e | w
-						[],
+						[																{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},                   {x:32,y:16, tiles:["g_flat_icorner_sw"]},                   {x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]},                           {x:48,y:48, tiles:["g_fall_lg"]}
+						],
 						//12: s | w
-						[],
+						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_corner_ne"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_icorner_ne"]},                   {x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
+						],
 						//13: n | s | w
-						[],
+						[																{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},					{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_icorner_ne"]},					{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+																						{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
+						],
 						//14: e | s | w
-						[],
+						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_icorner_ne"]},                   {x:32,y:32, tiles:["g_flat_icorner_nw"]},                   {x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},{x:48,y:48, tiles:["g_fall_lg"]}
+						],
 						//15: n | e | s | w
-						[]
+						[																{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
+							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},                   {x:32,y:16, tiles:["g_flat_icorner_sw"]},                   {x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_icorner_ne"]},                   {x:32,y:32, tiles:["g_flat_icorner_nw"]},                   {x:48,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},{x:48,y:48, tiles:["g_fall_lg"]}
+						]
 					],
-					entrances:[],
-					exits:[]
+					entrances:this.cells,
+					exits:this.cells
 				},
-				style = {
-				//	bg:'#15111b'
-				//	,'spritemap':spritemap
+				styleObj = {
+					'bg':'#15111b',
+					'spritemap':spritemap
 				};
 
-				this.mazeRenderer = new AMaze.render.MazeRenderer({'bgcanvas':$('#bgcanvas')[0],'canvasEngine':canvas,'scene':this,'stage':stage,'maze':modelTest,'style':style});
+				this.mazeRenderer = new AMaze.render.MazeRenderer({
+					'bgcanvas':$('#bgcanvas')[0],
+					'canvasEngine':canvas,
+					'scene':this,
+					'stage':stage,
+					'maze':modelTest,
+					'style':styleObj
+				});
 				this.mazeRenderer.drawMaze();
 
 				canvas.Input.keyUp(Input.Up, function(e) {
