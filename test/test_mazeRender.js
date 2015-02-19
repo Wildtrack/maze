@@ -105,7 +105,8 @@ $(function() {
 						//9: n | w
 						[	                                                            {x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},                   {x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
-							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_corner_se"]}
+							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:32,y:32, tiles:["g_flat_corner_se"]},
+							{x: 0,y:48, tiles:["g_fall_lg"]},                           {x:16,y:48, tiles:["g_fall_lg"]},                           {x:32,y:48, tiles:["g_fall_lg"]}
 						],
 						//10: e | w
 						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},

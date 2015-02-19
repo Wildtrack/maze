@@ -118,8 +118,63 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 		var self = this, cellBeingDrawn = [0,0], ctx = this.cacheCanvas.getContext('2d');
 		if(this.style.spritemap != null)
 		{
-			var tilesetImage = this.canvasEngine.Materials.get(this.spritemap.image),
-			tiles = [];
+			var tilesetImage = this.canvasEngine.Materials.get(this.style.spritemap.image),
+			tiles = [], tileSize = this.style.spritemap.tile,
+			offset = this.style.spritemap.reg, cells = this.style.spritemap.cells,
+			entrances = this.style.spritemap.entrances, exits = this.style.spritemap.exits,
+			cellDef, localOffset = [0,0];
+			//building the catalogue of sprites
+			for(var y = 0; y < this.style.spritemap.size[1]; y++)
+			{
+				for(var x = 0; x < this.style.spritemap.size[0]; x++)
+				{
+					if(this.style.spritemap.set[y*this.style.spritemap.size[0]+x] != "blank")
+					{
+						var tempCanvas = document.createElement('canvas'),
+						tempCtx = tempCanvas.getContext('2d');
+						tempCanvas.width = tileSize[0];
+						tempCanvas.height = tileSize[1];
+						tempCtx.drawImage(tilesetImage,
+							offset[0] + x*tileSize[0],	offset[1] + y*tileSize[1], tileSize[0], tileSize[1],
+							0,							0,						   tileSize[0], tileSize[1]);
+						tiles[this.style.spritemap.set[y*this.style.spritemap.size[0]+x]] = tempCanvas;
+					}
+				}
+			}
+			//catalogue built, now draw that sweet-tastic maze
+			for( x = 0; x < this.maze.width; x++)
+			{
+				for( y = 0; y < this.maze.height; y++)
+				{
+					localOffset = [x*this.style.cellSize[0], y*this.style.cellSize[1]];
+					cellDef = this.style.spritemap.cells[this.maze.board[x][y]];
+					for(var idx = 0; idx < cellDef.length; idx++)
+					{
+						var obj = cellDef[idx],
+						img = tiles[obj.tiles.length>1? obj.tiles[Math.floor(Math.random()*obj.tiles.length)] : obj.tiles[0]];
+						ctx.drawImage(img, localOffset[0]+obj.x, localOffset[1]+obj.y);
+						//technically I should worry about scaling here but not at present
+					}
+					if(x == this.maze.start[0] && y == this.maze.start[1])
+					{
+						//overlay with start color at 20% alpha
+						ctx.save();
+						ctx.fillStyle = this.style.entrance;
+						ctx.globalAlpha = 0.2;
+						ctx.fillRect(localOffset[0],localOffset[1], this.style.cellSize[0],this.style.cellSize[1]);
+						ctx.restore();
+					}
+					if(x == this.maze.end[0] && y == this.maze.end[1])
+					{
+						//overlay with end color at 20% alpha
+						ctx.save();
+						ctx.fillStyle = this.style.exit;
+						ctx.globalAlpha = 0.2;
+						ctx.fillRect(localOffset[0],localOffset[1], this.style.cellSize[0],this.style.cellSize[1]);
+						ctx.restore();
+					}
+				}
+			}
 		}
 		else
 		{
