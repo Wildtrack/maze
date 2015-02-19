@@ -82,7 +82,7 @@ AMaze.render = {
 			this.cacheCanvas.width = this.maze.width*this.style.cellSize[0]+2;
 			this.cacheCanvas.height = this.maze.height*this.style.cellSize[1]+2;
 			this.canvas = this.scene.getCanvas();
-			//$('#'+this.canvas.element.id).css('background-color', this.style.bg);
+			$('#'+this.bgCanvas.id).css('background-color', this.style.bg);
 			this.actualWidth = this.canvas.width;
 			this.actualHeight = this.canvas.height;
 			this.style.width = this.actualWidth-(this.style.padding*2);
