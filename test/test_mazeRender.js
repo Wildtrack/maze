@@ -10,7 +10,7 @@ $(function() {
 			.extend(Input);
 
 	//not testing the model here, assume it works
-	AMaze.model.load('../levels/small (5-10)/maze2_3x3.json', function(loaded) {
+	AMaze.model.load('../levels/small (5-10)/maze3_10x10.json', function(loaded) {
 		var modelTest = loaded;
 
 		canvas.Scene.new({
@@ -128,7 +128,7 @@ $(function() {
 						[																{x:16,y: 0, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y: 0, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_icorner_se"]},					{x:32,y:16, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
 							{x: 0,y:32, tiles:["g_flat_s_1","g_flat_s_2","g_flat_s_3"]},{x:16,y:32, tiles:["g_flat_icorner_ne"]},					{x:32,y:32, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]},
-																						{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
+							{x: 0,y:48, tiles:["g_fall_lg"]},							{x:16,y:48, tiles:["g_flat_w_1","g_flat_w_2","g_flat_w_3"]},{x:32,y:48, tiles:["g_flat_e_1","g_flat_e_2","g_flat_e_3"]}
 						],
 						//14: e | s | w
 						[	{x: 0,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:16,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:32,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},{x:48,y:16, tiles:["g_flat_n_1","g_flat_n_2","g_flat_n_3"]},
@@ -159,21 +159,31 @@ $(function() {
 					'style':styleObj
 				});
 				this.mazeRenderer.drawMaze();
+				this.debug = $('#debug');
+				self = this;
+				this.debugFunc = function() {
+					self.debug.text("["+modelTest.currPos[0]+","+modelTest.currPos[1]+"]");
+				};
+				this.debugFunc();
 
 				canvas.Input.keyUp(Input.Up, function(e) {
 					modelTest.movePlayer(AMaze.model.N_CONST);
+					self.debugFunc();
 				});
 
 				canvas.Input.keyUp(Input.Bottom, function(e) {
 					modelTest.movePlayer(AMaze.model.S_CONST);
+					self.debugFunc();
 				});
 
 				canvas.Input.keyUp(Input.Left, function(e) {
 					modelTest.movePlayer(AMaze.model.W_CONST);
+					self.debugFunc();
 				});
 
 				canvas.Input.keyUp(Input.Right, function(e) {
 					modelTest.movePlayer(AMaze.model.E_CONST);
+					self.debugFunc();
 				});
 			},
 			render: function(stage) {
