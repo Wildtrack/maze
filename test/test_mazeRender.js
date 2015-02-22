@@ -164,7 +164,7 @@ $(function() {
 					'style':styleObj
 				});
 
-				this.mazeRenderer.createTrailModel(this, "trail2");
+				this.mazeRenderer.createTrailModel();
 
 				this.mazeRenderer.drawMaze();
 				this.debug = $('#debug');

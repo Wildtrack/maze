@@ -45,7 +45,7 @@ var trailModel = {
 trailModel.create.prototype.exists = function(x, y) 
 {
 
-        flag = !trailModel.backTrackOn || (flag = this.trace.onTrack(x, y));
+        var flag = !trailModel.backTrackOn || (flag = this.trace.onTrack(x, y));
         var data = trailModel.theBoard[x][y];
 
         if (this.debugOn) console.log(x+","+y+":"+ flag + ", dot exists: "+ (data != 0));
@@ -72,6 +72,7 @@ trailModel.create.prototype.exists = function(x, y)
         return false;
 };
 
+//v1 the original makeTrail function, use CanvasEngine
 trailModel.create.prototype.makeTrail = function(stage, cursor) 
 {
         var x = cursor.x;
@@ -94,9 +95,63 @@ trailModel.create.prototype.makeTrail = function(stage, cursor)
         }
 };
 
-// makeTrail adapter
-trailModel.create.prototype.makeTrailv2 = function(stage, pos) {
-        this.makeTrail(stage, {x: pos[0], y: pos[1]});
+
+// makeTrail adapter to work with AMaze.Renderer, use HTML5 Canvas
+trailModel.create.prototype.makeTrailV2 = function(canvas, pos, cellSize, theEngine) {
+        var x1 = pos[0];
+        var y1 = pos[1];
+        var dx = cellSize[0];
+        var dy = cellSize[1];
+
+        ctx = canvas.getContext('2d');
+
+        var existsV2 = function(x, y, trace) {
+                var flag = !trailModel.backTrackOn || (flag = trace.onTrack(x, y));
+                var data = trailModel.theBoard[x][y];
+
+                if (this.debugOn) console.log(x+","+y+":"+ flag + ", dot exists: "+ (data != 0));
+
+                if (data)
+                {
+                        // check whether it is backtrack
+                        if (flag) {
+
+                                this.lastDot = data;
+
+                                var ddx = data.x*dx+dx/2-16;
+                                var ddy = data.y*dy+dy/2-16;
+
+                                ctx.clearRect(ddx+8, ddy+8, 16, 16);
+                                trailModel.theBoard[this.lastX = x][this.lastY = y] = 0;
+
+                        } 
+
+                        // create some effect when track overlays
+                        if (trailModel.overlayEffectOn) {
+                                //will be worked on...
+                        }
+
+                        return true;
+                }
+                return false;
+        }
+
+
+        if (!existsV2(x1, y1, this.trace)) {
+
+                if (this.lastDot != 0) //if last dot is saved turn it on
+                {
+                        trailModel.theBoard[this.lastX][this.lastY] = this.lastDot;
+
+                        ctx.drawImage(theEngine.Materials.get("trail2"), x1*dx+dx/2-16, y1*dy+dy/2-16);
+
+                        this.lastDot = 0; 
+                }
+
+                this.lastDot = new this.dot(x1, y1);
+                trailModel.theBoard[this.lastX = x1][this.lastY = y1] = this.lastDot;
+                //stage.prepend(this.lastDot);
+        }
 }
 
 //

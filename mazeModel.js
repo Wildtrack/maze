@@ -15,6 +15,7 @@ AMaze.model = {
 		this.end = [this.width-1, this.height-1];
 		this.currPos = [this.start[0],this.start[1]];
 
+		//for trailModel use
 		this.trailOn = false;
 
 		//board is a 2d array of cells, each cell is one of 16 states

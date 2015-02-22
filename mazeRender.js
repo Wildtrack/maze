@@ -245,7 +245,7 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 		if(tmpMazeUL[0] != this.displayMazeUL[0] || tmpMazeUL[1] != this.displayMazeUL[1])
 		{
 			//trailModel 
-			if (AMaze.trailOn) this.trailModel.makeTrailv2(this.cacheCanvas.stage, this.maze.currPos);
+			if (AMaze.model.trailOn) this.trailModel.makeTrailV2(this.cacheCanvas, this.maze.currPos, this.style.cellSize, this.canvasEngine);
 
 			this.displayMazeUL = tmpMazeUL;
 			//redraw
@@ -268,7 +268,7 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 };
 
 //enable trail model inside Amaze renderer
-AMaze.render.MazeRenderer.prototype.createTrailModel = function(scene, pngName) {
+AMaze.render.MazeRenderer.prototype.createTrailModel = function() {
 
 	// exit if no maze is present
 	if (this.maze == null) {
@@ -277,16 +277,12 @@ AMaze.render.MazeRenderer.prototype.createTrailModel = function(scene, pngName) 
 	}
 
 	//set up default trail image
-	el = function(x, y) {
-		trail = scene.createElement(16, 16);
-		trail.drawImage(pngName);
-		trail.x = x;
-		trail.y = y;
-		return trail;
+	var el = function(x1, y1) {
+		return {x: x1, y: y1};
 	}
 
 	this.trailModel = new trailModel.create(el, this.AMaze);
-	this.trailModel.makeTrailv2(this.cacheCanvas.stage, this.maze.currPos);
+	//this.trailModel.makeTrailV2(this.cacheCanvas, this.maze.currPos, this.style.cellSize, this.canvasEngine);
 	AMaze.trailOn = true;
 
 }
