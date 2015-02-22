@@ -18,7 +18,12 @@ $(function() {
 			materials: {
 				images: {
 					player: "../images/knight.png",
-					tileset: "../images/dungeon_tiles_compact_and_varied.png"
+					tileset: "../images/dungeon_tiles_compact_and_varied.png",
+
+					trail1: "../images/trail_dot1.png",
+            		trail2: "../images/trail_dot2.png",
+            		trail3: "../images/trail_dot3.png",
+            		trail4: "../images/trail_dot4.png"
 				}
 			},
 			ready: function(stage) {
@@ -158,6 +163,9 @@ $(function() {
 					'maze':modelTest,
 					'style':styleObj
 				});
+
+				this.mazeRenderer.createTrailModel(this, "trail2");
+
 				this.mazeRenderer.drawMaze();
 				this.debug = $('#debug');
 				self = this;

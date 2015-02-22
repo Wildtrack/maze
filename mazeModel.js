@@ -15,6 +15,8 @@ AMaze.model = {
 		this.end = [this.width-1, this.height-1];
 		this.currPos = [this.start[0],this.start[1]];
 
+		this.trailOn = false;
+
 		//board is a 2d array of cells, each cell is one of 16 states
 		//check with bitwise and
 		//0/1: not/accessible from n

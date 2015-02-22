@@ -244,6 +244,9 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 								(this.actualHeight/2)-(pls.naturalHeight/2)-(this.maze.currPos[1]*this.style.cellSize[1])];
 		if(tmpMazeUL[0] != this.displayMazeUL[0] || tmpMazeUL[1] != this.displayMazeUL[1])
 		{
+			//trailModel 
+			if (AMaze.trailOn) this.trailModel.makeTrailv2(this.cacheCanvas.stage, this.maze.currPos);
+
 			this.displayMazeUL = tmpMazeUL;
 			//redraw
 			var bgCtx = this.bgCanvas.getContext('2d'),
@@ -263,3 +266,27 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 		//maybe do trail things here
 	}
 };
+
+//enable trail model inside Amaze renderer
+AMaze.render.MazeRenderer.prototype.createTrailModel = function(scene, pngName) {
+
+	// exit if no maze is present
+	if (this.maze == null) {
+		console.log("Error! Maze must be loaded to MazeRenderer before trail model is created!");
+		return;
+	}
+
+	//set up default trail image
+	el = function(x, y) {
+		trail = scene.createElement(16, 16);
+		trail.drawImage(pngName);
+		trail.x = x;
+		trail.y = y;
+		return trail;
+	}
+
+	this.trailModel = new trailModel.create(el, this.AMaze);
+	this.trailModel.makeTrailv2(this.cacheCanvas.stage, this.maze.currPos);
+	AMaze.trailOn = true;
+
+}

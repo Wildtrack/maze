@@ -13,6 +13,7 @@ var trailModel = {
                 this.lastDot = 0;
                 this.lastX = 0;
                 this.lastY = 0;
+                this.board = [];
 
                 //Debug mode on
                 this.debugOn = false;
@@ -92,6 +93,11 @@ trailModel.create.prototype.makeTrail = function(stage, cursor)
         	//stage.prepend(this.lastDot);
         }
 };
+
+// makeTrail adapter
+trailModel.create.prototype.makeTrailv2 = function(stage, pos) {
+        this.makeTrail(stage, {x: pos[0], y: pos[1]});
+}
 
 //
 // User data model
