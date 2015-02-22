@@ -282,7 +282,6 @@ AMaze.render.MazeRenderer.prototype.createTrailModel = function() {
 	}
 
 	this.trailModel = new trailModel.create(el, this.AMaze);
-	//this.trailModel.makeTrailV2(this.cacheCanvas, this.maze.currPos, this.style.cellSize, this.canvasEngine);
-	AMaze.trailOn = true;
+	AMaze.model.trailOn = true;
 
 }
