@@ -232,7 +232,7 @@ AMaze.render.MazeRenderer.prototype.drawMaze = function() {
 	}
 };
 
-//refresh position of player (maybe trail if mluo wants to merge his changes in here?)
+//refresh position of player and trail 
 AMaze.render.MazeRenderer.prototype.refresh = function() {
 	//no need to do anything if canvas == null
 	if(this.canvas != null && this.player != null && this.maze != null) {
@@ -244,9 +244,7 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 								(this.actualHeight/2)-(pls.naturalHeight/2)-(this.maze.currPos[1]*this.style.cellSize[1])];
 		if(tmpMazeUL[0] != this.displayMazeUL[0] || tmpMazeUL[1] != this.displayMazeUL[1])
 		{
-			//trailModel 
-			if (AMaze.model.trailOn) this.trailModel.makeTrailV2(this.cacheCanvas, this.maze.currPos, this.style.cellSize, this.canvasEngine);
-
+			
 			this.displayMazeUL = tmpMazeUL;
 			//redraw
 			var bgCtx = this.bgCanvas.getContext('2d'),
@@ -256,6 +254,16 @@ AMaze.render.MazeRenderer.prototype.refresh = function() {
 			bgCtx.drawImage(this.cacheCanvas,
 				cacheCoords[0], cacheCoords[1], Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]),
 				Math.max(this.displayMazeUL[0],0), Math.max(this.displayMazeUL[1],0), Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]));
+			
+			//trailModel 
+			if (AMaze.model.trailOn)
+			{
+				this.trailModel.makeTrailV2(this.cacheTrail, this.maze.currPos, this.style.cellSize, this.canvasEngine);
+
+				bgCtx.drawImage(this.cacheTrail,
+				cacheCoords[0], cacheCoords[1], Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]),
+				Math.max(this.displayMazeUL[0],0), Math.max(this.displayMazeUL[1],0), Math.min(this.actualWidth, this.cacheCanvas.width-cacheCoords[0]), Math.min(this.actualHeight, this.cacheCanvas.height-cacheCoords[1]));
+			}
 		}
 
 		this.player.x = this.displayMazeUL[0] >= 0 || this.displayMazeUL[0]+(this.maze.width*this.style.cellSize[0]) >= this.actualWidth?
@@ -282,6 +290,9 @@ AMaze.render.MazeRenderer.prototype.createTrailModel = function() {
 	}
 
 	this.trailModel = new trailModel.create(el, this.AMaze);
+	this.cacheTrail = document.createElement('canvas');
+	this.cacheTrail.width = this.maze.width*this.style.cellSize[0]+2;
+	this.cacheTrail.height = this.maze.height*this.style.cellSize[1]+2;
 	AMaze.model.trailOn = true;
 
 }

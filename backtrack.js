@@ -28,7 +28,7 @@ backtrack.model = function (opts)
 		this.lastY;
 
 		// turn on for debug information
-		this.debugOn = false;
+		this.debugOn = true;
 
 		// Root coord must be present before track model can be used
 		this.setRoot = function(x, y) {

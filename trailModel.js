@@ -16,7 +16,7 @@ var trailModel = {
                 this.board = [];
 
                 //Debug mode on
-                this.debugOn = false;
+                this.debugOn = true;
 
 		for( var x = trailModel.width; x--; )
 		{
@@ -54,6 +54,8 @@ trailModel.create.prototype.exists = function(x, y)
         {
                 // check whether it is backtrack
                 if (flag) {
+
+                        trailModel.theBoard[this.lastX][this.lastY] = 0;
 
                         this.lastDot = data;
 
@@ -108,12 +110,14 @@ trailModel.create.prototype.existsV2 = function(x, y, dx, dy, ctx)
                 // check whether it is backtrack
                 if (flag) {
 
+                        trailModel.theBoard[this.lastX][this.lastY] = 0;
+
                         this.lastDot = data;
 
                         var ddx = data.x*dx+dx/2-16;
                         var ddy = data.y*dy+dy/2-16;
 
-                        ctx.clearRect(ddx+8, ddy+8, 16, 16);
+                        ctx.clearRect(ddx+8, ddy+8, 20, 20);
                         trailModel.theBoard[this.lastX = x][this.lastY = y] = 0;
 
                 } 
