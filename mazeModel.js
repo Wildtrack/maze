@@ -1,3 +1,9 @@
+//var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+//if (typeof $ !== 'undefined'){ var $ = require('jquery')(require("jsdom").jsdom().parentWindow) }
+if (typeof window === "undefined")
+    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+
+
 var AMaze = AMaze || {};
 AMaze.model = {
 	//Maze constructor
@@ -148,3 +154,7 @@ AMaze.model.Maze.prototype.movePlayer = function(dir) {
 AMaze.model.Maze.prototype.hasPlayerWon = function() {
 	return (this.currPos[0] == this.end[0]) && (this.currPos[1] == this.end[1]);
 };
+
+if (typeof exports !== 'undefined'){ module.exports = AMaze.model }
+
+//module.exports = AMaze.model;
