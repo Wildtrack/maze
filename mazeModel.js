@@ -1,3 +1,7 @@
+//Incantation to check whether we are in the browser or node
+if (typeof window === "undefined")
+    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+
 var AMaze = AMaze || {};
 AMaze.model = {
 	//Maze constructor
@@ -148,3 +152,6 @@ AMaze.model.Maze.prototype.movePlayer = function(dir) {
 AMaze.model.Maze.prototype.hasPlayerWon = function() {
 	return (this.currPos[0] == this.end[0]) && (this.currPos[1] == this.end[1]);
 };
+
+//Check to see if we are in node or the browser.
+if (typeof exports !== 'undefined'){ module.exports = AMaze.model }
