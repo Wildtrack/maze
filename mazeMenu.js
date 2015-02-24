@@ -2,7 +2,35 @@
 // Amazing mazes menu 
 //
 
+//
+// Global parameters & constants
+//
+defaultLevel = './levels/small (5-10)/maze3_10x10.json';
+currentLevel = '';
+gameStep = 0;
+
+//
+// Tasks should be done at each step
+// 1. update step counts
+// 2. time, maybe?
+// 3. check if player has won
+// 
+// Here parameter maze is the maze object created in setGameCanvas
+//
+function updateStatus(maze) {
+	
+	if (maze.hasPlayerWon()) alert("Congratulations!\nYou have completed this level!");
+
+	++gameStep;
+	//$("#dsp_steps").text(gameStep);
+}
+
+// callback function for loading the game canvas & spritemap
 function setGameCanvas(loaded) {
+
+		var canvas = CE.defines("canvas_id")
+			.extend(Input);
+
 		var modelTest = loaded;
 
 		canvas.Scene.new({
@@ -156,25 +184,26 @@ function setGameCanvas(loaded) {
 					'style':styleObj
 				});
 
+				// comment out to disable trail
 				this.mazeRenderer.createTrailModel();
 
 				this.mazeRenderer.drawMaze();
 
 
 				canvas.Input.keyUp(Input.Up, function(e) {
-					modelTest.movePlayer(AMaze.model.N_CONST);
+					if (modelTest.movePlayer(AMaze.model.N_CONST)) updateStatus(modelTest);
 				});
 
 				canvas.Input.keyUp(Input.Bottom, function(e) {
-					modelTest.movePlayer(AMaze.model.S_CONST);
+					if (modelTest.movePlayer(AMaze.model.S_CONST)) updateStatus(modelTest);
 				});
 
 				canvas.Input.keyUp(Input.Left, function(e) {
-					modelTest.movePlayer(AMaze.model.W_CONST);
+					if (modelTest.movePlayer(AMaze.model.W_CONST)) updateStatus(modelTest);
 				});
 
 				canvas.Input.keyUp(Input.Right, function(e) {
-					modelTest.movePlayer(AMaze.model.E_CONST);
+					if (modelTest.movePlayer(AMaze.model.E_CONST)) updateStatus(modelTest);
 				});
 			},
 			render: function(stage) {
@@ -183,14 +212,13 @@ function setGameCanvas(loaded) {
 			}
 		});
 		canvas.ready().Scene.call("MyScene");
-	});
+};
 
 $(function() {
-	var canvas = CE.defines("canvas_id")
-			.extend(Input);
+	
 
 	//not testing the model here, assume it works
-	AMaze.model.load('./levels/small (5-10)/maze3_10x10.json', setGameCanvas);
+	AMaze.model.load(currentLevel = defaultLevel, setGameCanvas);
 
 	$(window).on('keydown', function(e) {
 		if([32,37,38,39,40].indexOf(e.keyCode) > -1) {
@@ -200,7 +228,7 @@ $(function() {
 
 	//restart level
 	$("#menu_new").click(function() {
-		console.log("new button is pressed.");
+		if (confirm("Are you sure you want to restart this level?")) AMaze.model.load(currentLevel = defaultLevel, setGameCanvas);
 	});
 
 	$("#menu_goto").click(function() {
