@@ -2,12 +2,7 @@
 // Amazing mazes menu 
 //
 
-$(function() {
-	var canvas = CE.defines("canvas_id")
-			.extend(Input);
-
-	//not testing the model here, assume it works
-	AMaze.model.load('./levels/small (5-10)/maze3_10x10.json', function(loaded) {
+function setGameCanvas(loaded) {
 		var modelTest = loaded;
 
 		canvas.Scene.new({
@@ -190,35 +185,39 @@ $(function() {
 		canvas.ready().Scene.call("MyScene");
 	});
 
+$(function() {
+	var canvas = CE.defines("canvas_id")
+			.extend(Input);
+
+	//not testing the model here, assume it works
+	AMaze.model.load('./levels/small (5-10)/maze3_10x10.json', setGameCanvas);
+
 	$(window).on('keydown', function(e) {
 		if([32,37,38,39,40].indexOf(e.keyCode) > -1) {
 			e.preventDefault();
 		}
 	}).scrollTop(0).scrollLeft(0);
 
+	//restart level
+	$("#menu_new").click(function() {
+		console.log("new button is pressed.");
+	});
+
+	$("#menu_goto").click(function() {
+		console.log("goto button is pressed.");
+	});
+
+	$("#menu_level").click(function() {
+		console.log("level button is pressed.");
+	});
+
+	$("#menu_save").click(function() {
+		console.log("save button is pressed.");
+	});
+
+	$("#menu_load").click(function() {
+		console.log("load button is pressed.");
+	});
+
+
 });
-
-//gwd dummy
-var gwd = {
-	//prepation goes here
-}
-
-gwd.new = function(event) {
-      console.log("new button is pressed.")
-};
-    
-gwd.goto = function(event) {
-      console.log("goto button is pressed.");
-};
-    
-gwd.level = function(event) {
-      console.log("level button is pressed.");
-};
-
-gwd.save = function(event) {
-      console.log("save button is pressed.");
-};
-
-gwd.load = function(event) {
-      console.log("load button is pressed.");
-};
