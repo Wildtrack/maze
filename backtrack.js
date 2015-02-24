@@ -1,3 +1,8 @@
+if (typeof window === "undefined")
+    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+
+
+
 var backtrack = backtrack || {
 	//
 	// Direcion mapping table, 0: north, 1: east, 2: south, 3: west
@@ -28,7 +33,7 @@ backtrack.model = function (opts)
 		this.lastY;
 
 		// turn on for debug information
-		this.debugOn = true;
+		this.debugOn = false;
 
 		// Root coord must be present before track model can be used
 		this.setRoot = function(x, y) {
@@ -60,12 +65,13 @@ backtrack.model = function (opts)
 			//if cursor is moving to a new direction then add a new node
 			//Each time either x or y would be changed. If both are changed then something is wrong!
 			if (this.lastX != x && this.lastY != y)
-			{
-				console.log("Unexpected move x:"+x+ " y:"+y+"lastX:"+this.lastX+"lastY:"+this.lastY); //something is wrong!
+			{	
+				if (this.debugOn) console.log("Unexpected move x:"+x+
+				 " y:"+y+"lastX:"+this.lastX+"lastY:"+this.lastY); //something is wrong!
 				return false;
 			}
 			else if (this.lastX == x && this.lastY == y) {
-				console.log("Cursor freezes"); //something is wrong too!
+				if (this.debugOn) console.log("Cursor freezes"); //something is wrong too!
 				return false;
 			}
 
@@ -290,3 +296,5 @@ var trackNode = function (parentNode, x, y, newDir) {
 	this.child = [0,0,0,0];
 
 }
+
+if (typeof exports !== 'undefined'){ module.exports = backtrack }
