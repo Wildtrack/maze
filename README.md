@@ -22,3 +22,34 @@ To run under Chrome:
 - Perform the same cloning step into a web host directory (such as NCSU's www4 public html space)
 
 - It will not run locally unless you completely disable same-origin-policy restrictions in Chrome, which applies to the entire browser, not per tab
+
+#Testing Locally
+So you may say, I'd like to test this on my machine instead of sending it to Travis CI to fail.  Please do that!
+
+
+##Prerequisites
+
+- Nodejs and npm:  If you don't have them you can get them [here](http://nodejs.org/download/).
+
+- g++: One of the build tools requires g++ so you'll need to get that too:  
+	
+	
+	
+    - In OSX: If you have the command line   developer tools you'll meet this requirement without anything further.  If you don't have the command line developer tools you'll be prompted to install and download when you try to run npm install anyway.
+	
+    - Windows: Do whatever you crazy windows people do for stuff like this.
+
+    - If you're in ubuntu you'll run:
+	
+   `sudo apt-get update`
+	
+  `sudo apt-get install g++`
+
+##Usage
+Run two simple commands:
+
+`npm install`
+
+`npm test`
+
+Should npm install fail you may need to run it with the sudo command.  Also npm has some bizarre behavior from time to time so if it hangs just rerun it.
