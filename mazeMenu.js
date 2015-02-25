@@ -18,11 +18,65 @@ gameStep = 0;
 // Here parameter maze is the maze object created in setGameCanvas
 //
 function updateStatus(maze) {
-	
-	if (maze.hasPlayerWon()) alert("Congratulations!\nYou have completed this level!");
 
-	++gameStep;
-	//$("#dsp_steps").text(gameStep);
+	if (maze.hasPlayerWon()) {
+		alert("Congratulations!\nYou have completed this level!");
+		maze.userData.TimerOff(); //stop the timer
+	}
+
+	maze.userData.keepStep();
+	$("#dsp_steps").text(maze.userData.step);
+
+	//additional status check goes here
+}
+
+
+// user data per level
+// initTime should be Date.now()
+// by default timer is on
+function userData(initTime){
+
+        var startTime = initTime;
+        var counter = 0; //internal counter, default timer is on
+
+        this.step = 0;
+
+        getTime = function() {
+                return ((Date.now() - startTime)/1000);
+        }
+
+        this.getMinSec = function() {
+        	var totalSeconds = Math.floor(getTime());
+  			var minutes = Math.floor(totalSeconds/60);
+  			var seconds = totalSeconds - minutes * 60;
+  			return minutes + ':' + seconds;
+        }
+
+        this.TimerOff = function() {
+        	counter = -1;
+        }
+
+        this.TimerOn = function() {
+        	counter = 0;
+        }
+
+        this.keepStep = function() {
+        	this.step++;
+        	if (this.step > 999) this.step = 999;
+        }
+
+        this.displayMinSec = function() {
+        	if (counter == -1)
+        	{
+        		return;
+        	}
+        	else if (counter > 60)
+        	{
+        		counter = 0;
+        		$("#dsp_time").text(this.getMinSec()); //update index.html
+        	}
+        	else ++counter;
+        }
 }
 
 // callback function for loading the game canvas & spritemap
@@ -189,6 +243,8 @@ function setGameCanvas(loaded) {
 
 				this.mazeRenderer.drawMaze();
 
+				//piggyback on Amaze model
+				modelTest.userData = new userData(Date.now());
 
 				canvas.Input.keyUp(Input.Up, function(e) {
 					if (modelTest.movePlayer(AMaze.model.N_CONST)) updateStatus(modelTest);
@@ -209,6 +265,9 @@ function setGameCanvas(loaded) {
 			render: function(stage) {
 				this.mazeRenderer.refresh();
 				stage.refresh();
+
+				//display time
+				modelTest.userData.displayMinSec();
 			}
 		});
 		canvas.ready().Scene.call("MyScene");
