@@ -1,6 +1,9 @@
 # Maze [![Build Status](https://travis-ci.org/CSC510-2015-Axitron/maze.svg?branch=master)](https://travis-ci.org/CSC510-2015-Axitron/maze)
 Repo for Maze game
 
+##This is a weird side branch for browser based testing.  It was hard to get working and I wanted to save it in case everything needed to be switched to this at some point in time.
+
+
 ##Prerequisites
 Due to a limitation in Chrome's origin policy handling of files, the project is most easily viewed in Firefox or Internet Explorer 11.
 
