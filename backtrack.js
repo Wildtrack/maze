@@ -1,8 +1,3 @@
-if (typeof window === "undefined")
-    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
-
-
-
 var backtrack = backtrack || {
 	//
 	// Direcion mapping table, 0: north, 1: east, 2: south, 3: west
