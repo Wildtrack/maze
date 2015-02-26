@@ -2,6 +2,7 @@
 if (typeof window === "undefined")
     var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
 
+
 var AMaze = AMaze || {};
 AMaze.model = {
 	//Maze constructor

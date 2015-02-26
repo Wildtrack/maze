@@ -1,13 +1,14 @@
 //Chai assert api is here
 //http://chaijs.com/api/assert/
 //Could always switch to should or expect if necessary
-var assert = require('chai').assert;
-var mazeModel = require('./../mazeModel');
+//var assert = require('chai').assert;
+//var mazeModel = require('./../mazeModel');
  
-var N_CONST = mazeModel.N_CONST;
-var E_CONST = mazeModel.E_CONST;
-var S_CONST = mazeModel.S_CONST;
-var W_CONST = mazeModel.W_CONST;
+assert = chai.assert;
+var N_CONST = AMaze.model.N_CONST;
+var E_CONST = AMaze.model.E_CONST;
+var S_CONST = AMaze.model.S_CONST;
+var W_CONST = AMaze.model.W_CONST;
 var TEST_WIDTH1 = 15;
 var TEST_HEIGHT1 = 8;
 var TEST_WIDTH2 = 1;
@@ -22,19 +23,19 @@ describe('MAZEMODEL TESTS', function() {
     describe('Maze constructor tests', function() {
         describe('Maze(null)', function(){
             before(function(){
-                maze = new mazeModel.Maze();
+                maze = new AMaze.model.Maze();
             });
             it('Check the constructed maze length is correct', function() {
               assert.equal(maze.width, maze.board.length);
             });
             it('Check that constructed maze width is correct', function() {  
-              assert.equal(maze.width, mazeModel.DEF_WIDTH);
+              assert.equal(maze.width, AMaze.model.DEF_WIDTH);
             });
         });
      
         describe('Maze(parameters)', function() {
             before(function(){
-                maze = new mazeModel.Maze({width:TEST_WIDTH1,height:TEST_HEIGHT1});
+                maze = new AMaze.model.Maze({width:TEST_WIDTH1,height:TEST_HEIGHT1});
             });
             it('Check board width is what was constructed', function() {
                 assert.equal(maze.board.length, maze.width);
@@ -54,7 +55,7 @@ describe('MAZEMODEL TESTS', function() {
      
     describe('Maze.makeAccessible()', function() {
         before(function() {
-            maze = new mazeModel.Maze();
+            maze = new AMaze.model.Maze();
             maze.makeAccessible(0,0, (N_CONST | S_CONST | E_CONST | W_CONST));
         });
         it('Check if exits are made accessible they are accessible', function() {
@@ -81,47 +82,50 @@ describe('MAZEMODEL TESTS', function() {
         });
     });
 
-
-
+    var maze3;
     // This test is hopelessly broken.
     describe('test loadout', function(){
-        mazeModel.load('./mocks/maze1.json', function(loaded){
-            var maze3 = loaded;
-            describe('Test loadout of 1st JSON maze', function() {
-                it('Check accessible exits at (0,1)', function() {
-                    assert.equal(maze3.accessibleExits(0,1), (S_CONST | N_CONST));
-                });
-                it('Check accessible exits at (1,2)', function(){
-                    assert.equal(maze3.accessibleExits(1,2), W_CONST);
-                });
-                it('Check maze width', function(){
-                    assert.equal(maze3.width, 2);
-                });
-                it('Check maze height', function(){
-                    assert.equal(maze3.height, 4);
-                });
-                it('Check that start is in the right place', function(){
-                    assert.equal(maze3.start, [0,1]);
-                });
-                it('Check that end is in the right place', function(){
-                    assert.equal(maze3.end, [1,2]);
-                });
+        before(function(){
+            maze3 = AMaze.model.load('http://localhost:8080/mocks/maze1.json', function(loaded){
+               return loaded;
             });
         });
+        it('Check that maze3 exists', function(){
+            assert.isDefined(maze3);
+        });
+        it('Check accessible exits at (0,1)', function() {
+            assert.equal(maze3.accessibleExits(0,1), (S_CONST | N_CONST));
+        });
+        it('Check accessible exits at (1,2)', function(){
+            assert.equal(maze3.accessibleExits(1,2), W_CONST);
+        });
+        it('Check maze width', function(){
+            assert.equal(maze3.width, 2);
+        });
+        it('Check maze height', function(){
+            assert.equal(maze3.height, 4);
+        });
+        it('Check that start is in the right place', function(){
+            assert.equal(maze3.start, [0,1]);
+        });
+        it('Check that end is in the right place', function(){
+            assert.equal(maze3.end, [1,2]);
+        });
     });
+    
      
     describe('Maze.onlyOneDir()', function() {
         it('Tests only one dir with one direction.', function() {
-            assert.isTrue(mazeModel.onlyOneDir(N_CONST));
+            assert.isTrue(AMaze.model.onlyOneDir(N_CONST));
         });
         it('Tests only one dir with two directions.', function() {
-            assert.isFalse(mazeModel.onlyOneDir(N_CONST | E_CONST));
+            assert.isFalse(AMaze.model.onlyOneDir(N_CONST | E_CONST));
         });
     });
      
     describe('Maze.movePlayer()', function() {
         before(function() {
-            maze = new mazeModel.Maze();
+            maze = new AMaze.model.Maze();
             maze.makeAccessible(maze.start[0], maze.start[1], S_CONST);
         });
         it('Try to move the player south.', function() {
@@ -131,7 +135,7 @@ describe('MAZEMODEL TESTS', function() {
             assert.deepEqual(maze.currPos, [0,1]);
         });
         before(function() {
-            maze = new mazeModel.Maze();
+            maze = new AMaze.model.Maze();
             maze.makeAccessible(maze.start[0], maze.start[1], S_CONST);
         });
         it('Try to move player south when the south is blocked', function () {
@@ -146,7 +150,7 @@ describe('MAZEMODEL TESTS', function() {
     describe('Maze.hasPlayerWon()', function() {
         describe('Player has not won yet', function() {
             before(function() {
-                maze = new mazeModel.Maze({width:TEST_WIDTH2,height:TEST_HEIGHT2});
+                maze = new AMaze.model.Maze({width:TEST_WIDTH2,height:TEST_HEIGHT2});
                 maze.makeAccessible(maze.start[0],maze.start[1], S_CONST);
             });
             it('Do we start the game having won?', function() {
