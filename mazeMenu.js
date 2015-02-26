@@ -5,9 +5,47 @@
 //
 // Global parameters & constants
 //
-defaultLevel = './levels/small (5-10)/maze3_10x10.json';
-currentLevel = '';
-gameStep = 0;
+currentMazeFile = '';
+currentLevel = 0; //small, medium, large, huge, etc...
+currentMaze = -1;  //the order of maze in which they appear in the directory
+
+//
+// Enter maze json files here
+// Please leave out '.json' file extension
+//
+mazeDirectory =
+{
+	'small (5-10)': ['maze1_2x3','maze2_3x3','maze3_10x10'],
+	'medium (11-20)': [],
+	'large (21-30)': [],
+	'huge (31+)': []
+}
+
+//Enter current level and maze number
+//Return the next maze json file 
+function getNextMaze() {
+
+	var mazeKeyArray = Object.keys(mazeDirectory);
+	var mazeArray = [];
+	
+	while (currentLevel < mazeKeyArray.length) {
+
+		mazeArray = mazeDirectory[mazeKeyArray[currentLevel]];
+
+		if (currentMaze < mazeArray.length - 1)
+		{
+			++currentMaze;
+			return "./levels/"+mazeKeyArray[currentLevel]+"/"+mazeArray[currentMaze]+".json";
+		}
+
+		++currentLevel;
+		currentMaze = 0;
+	}
+
+	currentLevel = 0
+
+	return getNextMaze(); //return a maze anyway
+}
 
 //
 // Tasks should be done at each step
@@ -20,8 +58,13 @@ gameStep = 0;
 function updateStatus(maze) {
 
 	if (maze.hasPlayerWon()) {
-		alert("Congratulations!\nYou have completed this level!");
+		
 		maze.userData.TimerOff(); //stop the timer
+
+		if (confirm("Congratulations!\nYou have completed this level!\nProceed to next maze?"))
+		{
+			AMaze.model.load(currentMazeFile = getNextMaze(), setGameCanvas);
+		}
 	}
 
 	maze.userData.keepStep();
@@ -245,6 +288,7 @@ function setGameCanvas(loaded) {
 
 				//piggyback on Amaze model
 				modelTest.userData = new userData(Date.now());
+				updateStatus(modelTest);
 
 				canvas.Input.keyUp(Input.Up, function(e) {
 					if (modelTest.movePlayer(AMaze.model.N_CONST)) updateStatus(modelTest);
@@ -275,9 +319,10 @@ function setGameCanvas(loaded) {
 
 $(function() {
 	
+	currentMazeFile = getNextMaze();console.log(currentMazeFile);
 
 	//not testing the model here, assume it works
-	AMaze.model.load(currentLevel = defaultLevel, setGameCanvas);
+	AMaze.model.load(currentMazeFile, setGameCanvas);
 
 	$(window).on('keydown', function(e) {
 		if([32,37,38,39,40].indexOf(e.keyCode) > -1) {
@@ -287,7 +332,7 @@ $(function() {
 
 	//restart level
 	$("#menu_new").click(function() {
-		if (confirm("Are you sure you want to restart this level?")) AMaze.model.load(currentLevel = defaultLevel, setGameCanvas);
+		if (confirm("Are you sure you want to restart this level?")) AMaze.model.load(currentMazeFile, setGameCanvas);
 	});
 
 	$("#menu_goto").click(function() {
