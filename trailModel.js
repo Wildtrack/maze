@@ -13,7 +13,7 @@ var trailModel = {
                 this.lastDot = 0;
                 this.lastX = 0;
                 this.lastY = 0;
-                this.board = [];
+                trailModel.theBoard = [];
 
                 //Debug mode on
                 this.debugOn = true;
