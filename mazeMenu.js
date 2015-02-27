@@ -73,6 +73,14 @@ function updateStatus(maze) {
 	//additional status check goes here
 }
 
+// reset status at the beginning of each level
+// step = 0;
+// time = 0:0
+// maybe others?
+function resetStatus() {
+	$("#dsp_steps").text(0);
+	$("#dsp_time").text("0:0");
+}
 
 // user data per level
 // initTime should be Date.now()
@@ -288,7 +296,7 @@ function setGameCanvas(loaded) {
 
 				//piggyback on Amaze model
 				modelTest.userData = new userData(Date.now());
-				updateStatus(modelTest);
+				resetStatus();
 
 				canvas.Input.keyUp(Input.Up, function(e) {
 					if (modelTest.movePlayer(AMaze.model.N_CONST)) updateStatus(modelTest);
@@ -319,7 +327,7 @@ function setGameCanvas(loaded) {
 
 $(function() {
 	
-	currentMazeFile = getNextMaze();console.log(currentMazeFile);
+	currentMazeFile = getNextMaze();
 
 	//not testing the model here, assume it works
 	AMaze.model.load(currentMazeFile, setGameCanvas);
