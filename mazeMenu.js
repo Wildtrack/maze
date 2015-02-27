@@ -39,7 +39,7 @@ function getNextMaze() {
 		}
 
 		++currentLevel;
-		currentMaze = 0;
+		currentMaze = -1;
 	}
 
 	currentLevel = 0
@@ -89,6 +89,7 @@ function userData(initTime){
 
         var startTime = initTime;
         var counter = 0; //internal counter, default timer is on
+        var minSec;
 
         this.step = 0;
 
@@ -121,10 +122,12 @@ function userData(initTime){
         	{
         		return;
         	}
-        	else if (counter > 60)
+        	else if (counter > 10)
         	{
         		counter = 0;
-        		$("#dsp_time").text(this.getMinSec()); //update index.html
+
+        		if (minSec != (minSec = this.getMinSec())) $("#dsp_time").text(minSec); //update index.html
+        		
         	}
         	else ++counter;
         }
