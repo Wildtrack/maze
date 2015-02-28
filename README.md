@@ -53,3 +53,9 @@ Run two simple commands:
 `npm test`
 
 Should npm install fail you may need to run it with the sudo command.  Also npm has some bizarre behavior from time to time so if it hangs just rerun it.
+This set of commands will automatically run istanbul, and jshint along with mocha tests.  Istanbul spits out some simple coverage information, but if you
+want more info go to:
+
+`./maze/coverage/lcov-report/index.html`
+
+For further linting information open report.html in your browser after running the tests.
