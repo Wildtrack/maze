@@ -16,7 +16,7 @@ var trailModel = {
                 trailModel.theBoard = [];
 
                 //Debug mode on
-                this.debugOn = true;
+                this.debugOn = false;
 
 		for( var x = trailModel.width; x--; )
 		{
@@ -105,21 +105,18 @@ trailModel.create.prototype.existsV2 = function(x, y, dx, dy, ctx)
 
         if (this.debugOn) console.log(x+","+y+":"+ flag + ", dot exists: "+ (data != 0));
 
-        if (data)
-        {
+        
                 // check whether it is backtrack
                 if (flag) {
 
-                        trailModel.theBoard[this.lastX][this.lastY] = 0;
+                        data = (trailModel.theBoard[this.lastDot.x][this.lastDot.y] -= 1);
 
-                        this.lastDot = data;
+                        var ddx = this.lastDot.x*dx+dx/2-16;
+                        var ddy = this.lastDot.y*dy+dy/2-16;
 
-                        var ddx = data.x*dx+dx/2-16;
-                        var ddy = data.y*dy+dy/2-16;
-
-                        ctx.clearRect(ddx+8, ddy+8, 20, 20);
-                        trailModel.theBoard[this.lastX = x][this.lastY = y] = 0;
-
+                        if (!data) ctx.clearRect(ddx+8, ddy+8, 20, 20);
+                        
+                        this.lastDot = new this.dot(x, y);
                 } 
                 else return false; //enable overlay on v2
 
@@ -129,11 +126,10 @@ trailModel.create.prototype.existsV2 = function(x, y, dx, dy, ctx)
                 }
 
                 return true;
-        }
-        return false;
+       
 };
 
-// makeTrail adapter to work with AMaze.Renderer, use HTML5 Canvas
+// makeTrail adapter to work with AMaze.Renderer, use HTML5 Canvas, supports multi-loop in & out
 trailModel.create.prototype.makeTrailV2 = function(canvas, pos, cellSize, theEngine) {
         var x1 = pos[0];
         var y1 = pos[1];
@@ -147,15 +143,18 @@ trailModel.create.prototype.makeTrailV2 = function(canvas, pos, cellSize, theEng
 
                 if (this.lastDot != 0) //if last dot is saved turn it on
                 {
-                        trailModel.theBoard[this.lastX][this.lastY] = this.lastDot;
+                        var value = trailModel.theBoard[this.lastDot.x][this.lastDot.y];
 
-                        ctx.drawImage(theEngine.Materials.get("trail2"), this.lastDot.x*dx+dx/2-16, this.lastDot.y*dy+dy/2-16);
+                        if (value == 1)
+                        {
+                                ctx.clearRect(this.lastDot.x*dx+dx/2-8, this.lastDot.y*dy+dy/2-8, 20, 20);
+                                ctx.drawImage(theEngine.Materials.get("trail2"), this.lastDot.x*dx+dx/2-16, this.lastDot.y*dy+dy/2-16);
+                        }
 
-                        this.lastDot = 0; 
                 }
 
                 this.lastDot = new this.dot(x1, y1);
-                trailModel.theBoard[this.lastX = x1][this.lastY = y1] = this.lastDot;
+                trailModel.theBoard[this.lastX = x1][this.lastY = y1] += 1;
                 //stage.prepend(this.lastDot);
         }
 }
