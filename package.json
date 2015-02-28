@@ -4,16 +4,22 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "test": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u bdd -R spec"
+    "test": "npm run mocha && npm run jshint",
+    "mocha": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u bdd -R spec",
+    "jshint": "./node_modules/.bin/jshint . --reporter node_modules/jshint-html-reporter/reporter.js > report.html ;true",
+    "jshint-cli": "./node_modules/.bin/jshint . --reporter node_modules/jshint-stylish/stylish.js ;true"
   },
   "author": "Matthew Neal",
   "license": "ISC",
   "devDependencies": {
     "chai": "*",
     "istanbul": "*",
+    "jquery": "*",
     "jsdom": "^3.1.1",
+    "jshint": "^2.6.1",
+    "jshint-html-reporter": "^0.2.3",
+    "jshint-stylish": "^1.0.1",
     "mocha": "*",
-    "jquery": "*"
+    "mocha-jshint": "0.0.9"
   }
-
 }

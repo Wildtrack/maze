@@ -1,8 +1,13 @@
 language: node_js
 node_js:
-  - "0.10"
-#whitelist
+- '0.10'
+deploy:
+  provider: divshot
+  environment: development
+  on: autodeploy
+  skip_cleanup: true
+  api_key:
+    secure: TubQ+cT2yT4X7hrRA9+xd2wFMAooMikwOJ4LSaiXc2zi0E9HzLB/iL7rl31bQ8gbN7c8z2Ps8vgOxJfmYllABDCAUbf75yyx/Ek89vACQOaO1AiMUwyn+slDMsC3sAt7eW/jT8eoflHyb6XizM6KvEDlcs/+M96he01luKOxkyw=
 branches:
   only:
-  - autobuild
-  - master
+  - autodeploy

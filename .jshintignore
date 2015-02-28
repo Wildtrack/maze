@@ -1,0 +1,11 @@
+node_modules/**
+public/**
+coverage/**
+image/**
+levels/**
+min/**
+OldTest/**
+README.md
+jquery-2.1.3.min.js
+canvasengine-1.3.2.all.min.js
+angular.min.js
