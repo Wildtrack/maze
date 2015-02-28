@@ -121,6 +121,7 @@ trailModel.create.prototype.existsV2 = function(x, y, dx, dy, ctx)
                         trailModel.theBoard[this.lastX = x][this.lastY = y] = 0;
 
                 } 
+                else return false; //enable overlay on v2
 
                 // create some effect when track overlays
                 if (trailModel.overlayEffectOn) {
