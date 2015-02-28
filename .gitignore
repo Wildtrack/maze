@@ -1,3 +1,4 @@
 config.codekit
 node_modules/
 coverage/
+public/levels/.DS_Store
