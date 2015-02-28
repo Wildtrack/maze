@@ -1,8 +1,3 @@
-if (typeof window === "undefined")
-    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
-
-
-
 var backtrack = backtrack || {
 	//
 	// Direcion mapping table, 0: north, 1: east, 2: south, 3: west
@@ -33,7 +28,7 @@ backtrack.model = function (opts)
 		this.lastY;
 
 		// turn on for debug information
-		this.debugOn = false;
+		this.debugOn = true;
 
 		// Root coord must be present before track model can be used
 		this.setRoot = function(x, y) {
@@ -51,8 +46,8 @@ backtrack.model = function (opts)
 		//
 		this.onTrack = function(x, y) {
 
-			if (this.debugOn) console.log("backtrack? "+this.backtracked+" node visited: "+
-				this.nodeRevisited+" backtrack dir: "+this.backtrackDir+ " current dir: "+this.currentDir);
+			if (this.debugOn) console.log(" node visited: "+
+				this.nodeRevisited+" backtrack dir: "+this.backtrackDir+ " current dir: "+this.currentDir+"\n");
 
 			//fault-safe
 			if (!this.tree){
@@ -121,6 +116,7 @@ backtrack.model = function (opts)
 				else if (this.nodeRevisited) //if node is being revisited the cursor moves to other direcdtion other than the above
 				{
 					this.nodeRevisited = false;
+					this.backtrackDir = backtrack.DIR_MAP[newDir];
 					this.currenDir = newDir;
 				}
 				else if (newDir == backtrack.DIR_MAP[this.currentDir]) // if cursor is moving backwards or is on backtrack
@@ -132,15 +128,7 @@ backtrack.model = function (opts)
 						this.nodeRevisited = true;
 						this.backtrackDir = this.pointer.direction; //assign parent's backtrack direction
 					}
-					else this.backtrackDir = newDir;
 
-					this.currentDir = newDir;
-					this.lastX = x;
-					this.lastY = y;
-					return true;
-				}
-				else if (newDir == backtrack.DIR_MAP[this.backtrackDir]) //if move in opposite of backtrack
-				{
 					this.currentDir = newDir;
 					this.lastX = x;
 					this.lastY = y;
@@ -148,9 +136,8 @@ backtrack.model = function (opts)
 				}
 				else //if not moving backwards then create a new node
 				{	
-					if (this.debugOn) console.log("new node: "+x+", "+y);
-					var dir = backtrack.DIR_MAP[this.currentDir];
-					this.pointer = (this.pointer.child[dir] = new trackNode(this.pointer, this.lastX, this.lastY, this.currentDir));
+					if (this.debugOn) console.log("new node: "+this.lastX+", "+this.lastY);
+					this.pointer = (this.pointer.child[this.currentDir] = new trackNode(this.pointer, this.lastX, this.lastY, this.backtrackDir));
 					this.backtrackDir = backtrack.DIR_MAP[this.currentDir = newDir]; //backtrack direction is always the opposite of current direction after a node is created
 				}
 				//this.currentDir = currentDir;
@@ -276,18 +263,18 @@ backtrack.model = function (opts)
 // params: parentNode pointer to parent node
 // params: newDir, direction = this.direction[newDir]
 //
-var trackNode = function (parentNode, x, y, newDir) {
+var trackNode = function (parentNode, x, y, backtrackDir) {
 
 	//
 	// The direction points to its parent node
 	//
-	this.direction = backtrack.DIR_MAP[newDir];
+	this.direction = backtrackDir;
 
 
 	// References to its parent
 	this.head = parentNode;
 
-			// node position
+	// node position
 	this.pos = [x, y];
 
 	// array of 4 elements is used but node can only have max. of 3 child nodes
