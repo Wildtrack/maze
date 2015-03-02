@@ -1,156 +1,16 @@
-<!DOCTYPE html>
 <html>
-
 <head>
-  <title>Amazing Mazes</title>
-  <!--link rel="stylesheet" type="text/css" href="maze.css"-->
-  <meta charset='utf-8'>
-  <link href="./css/gwdtaparea_style.css" data-version="1.2" data-exports-type="gwd-taparea" rel="stylesheet">
-  <link href="./css/gwdimage_style.css" data-version="1.1" data-exports-type="gwd-image" rel="stylesheet">
-  <script type="text/javascript" src="./jquery-2.1.3.min.js"></script>
-  
-  <style type="text/css" id="gwd-lightbox-style">
-    .gwd-lightbox {
-      overflow: hidden;
-    }
-  </style>
-  <style type="text/css">
-    html, body {
-      width: 100%;
-      height: 100%;
-      margin: 0px;
-    }
-    .gwd-page-container {
-      position: relative;
-      width: 100%;
-      height: 100%;
-    }
-    .gwd-page-wrapper {
-      position: absolute;
-      -webkit-transform: translateZ(0px);
-      background-color: rgb(255, 255, 255);
-    }
-    .gwd-page-size {
-      width: 800px;
-      height: 600px;
-    }
-    .gwd-img-befg {
-      position: absolute;
-      width: 800px;
-      height: 600px;
-      left: 0px;
-      top: 0px;
-    }
-    .gwd-taparea-ney1 {
-      position: absolute;
-      left: 20px;
-      top: 540px;
-      height: 50px;
-      width: 130px;
-    }
-    .gwd-taparea-7oyq {
-      left: 158px;
-      top: 540px;
-      width: 125px;
-    }
-    .gwd-taparea-hi7n {
-      left: 300.5px;
-      top: 539px;
-      width: 140px;
-    }
-    .gwd-taparea-u9un {
-      width: 140px;
-      left: 464.5px;
-      top: 540px;
-    }
-    .gwd-taparea-pwui {
-      top: 540px;
-    }
-    .gwd-taparea-8s8w {
-      left: 619.5px;
-      top: 540px;
-      width: 150px;
-    }
-    canvas {
-      position: absolute;
-      border: 5px solid black;
-      height: 384px;
-      width: 704px;
-      left: 41px;
-      top: 71px;
-      background-color: #fff;
-    }
-    .gwd-div-sgwf {
-      position: absolute;
-      width: 78px;
-      height: 34px;
-      font-family: 'Times New Roman';
-      text-align: left;
-      left: 122px;
-      top: 17px;
-    }
-    .gwd-div-s0lj {
-      text-align: center;
-    }
-    .gwd-span-gtjf {
-      font-size: 30px;
-      font-family: Tahoma;
-      color: rgb(182, 187, 48);
-      background-color: transparent;
-    }
-    .gwd-div-a5rr {
-      width: 78px;
-      left: 322px;
-      top:ad 18px;
-    }
-    .gwd-div-fdrl {
-      height: 36px;
-      width: 78px;
-    }
-    .gwd-span-7i1h {
-      width: auto;
-    }
-    .gwd-div-kswq {
-      width: 78px;
-      left: 520px;
-      top: 17px;
-    }
-    .gwd-div-k1ye {
-      width: 78px;
-    }
-    .gwd-span-wbjx {
-      width: auto;
-    }
-    .gwd-div-0wu2 {
-      top: 17px;
-    }
-    .gwd-div-v8fw {
-      width: 78px;
-      left: 708px;
-      top: 17px;
-    }
-    .gwd-div-dmkp {
-      width: 78px;
-    }
-    .gwd-span-jrbr {
-      width: auto;
-    }
-  </style>
-
-  </script>
+<script type="text/javascript" src="./designer.js"></script>
 </head>
-
 <body>
 
-          <canvas id="bgcanvas" width="704" height="384"
-              style="position: absolute; left: 48; top: 76; z-index: 0;"></canvas>
-          <canvas id="canvas_id" width="704" height="384"
-              style="position: absolute; left: 48; top: 76; z-index: 1;background-color: transparent;"></canvas>
-  
-  <script type="text/javascript" src="../canvasengine-1.3.2.all.min.js"></script>
-  <script type="text/javascript" src="./mazeDesignerModel.js"></script>
-  <script type="text/javascript" src="./mazeDesignerRender.js"></script>
+W: <input type='text' size='3' id='width'><br />
+H: <input type='text' size='3' id='height'><br />
+<input type='button' value='Set Size' onclick='' />
+
+<table border='0' cellspacing='0' cellpadding='0'>
+
+</table>
 
 </body>
-
 </html>
