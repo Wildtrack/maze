@@ -4,13 +4,27 @@
 </head>
 <body>
 
-W: <input type='text' size='3' id='width'><br />
-H: <input type='text' size='3' id='height'><br />
-<input type='button' value='Set Size' onclick='' />
-
 <table border='0' cellspacing='0' cellpadding='0'>
+<tr>
+<td>
+W: <input type='text' size='3' id='width' value='10'><br />
+H: <input type='text' size='3' id='height' value='10'><br />
+<input type='button' value='Set Size' onclick='set_size()' />
+</td>
+<td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+<td>
+Mouse action:<br />
+<input type='radio' name='tool' id='t_path' onclick='set_tool(0)' checked> <label for='t_path'>Place Path</label><br />
+<input type='radio' name='tool' id='t_start' onclick='set_tool(1)'> <label for='t_start'>Set Start</label><br />
+<input type='radio' name='tool' id='t_finish' onclick='set_tool(2)'> <label for='t_finish'>Set Finish</label><br />
+</td>
+</tr>
+</table>
+
+<table border='1' cellspacing='0' cellpadding='0' id='maze_table'>
 
 </table>
 
+<script>set_size()</script>
 </body>
 </html>
