@@ -15,7 +15,7 @@ function set_size() {
 		maze[y] = [];
 		table_row = document.createElement('tr');
 		for (x = 0; x < w; x++) {
-			maze[y][x] = [0];
+			maze[y][x] = 0;
 			table_cell = document.createElement('td');
 			table_cell.width = 30;
 			table_cell.height = 30;
@@ -82,12 +82,27 @@ function update_maze_code() {
 	code += '  "start":[' + start_x + ',' + start_y + ']\r\n';
 	code += '  "finish":[' + finish_x + ',' + finish_y + ']\r\n';
 	code += '  "board"[\r\n';
-	
+	for (x = 0; x < w; x++) {
+		code += '  	[';
+		for (y = 0; y < h; y++) {
+			var bit_n = (y != 0 && maze[y-1][x]) ? 1 : 0;
+			var bit_e = (x != w-1 && maze[y][x+1]) ? 2 : 0;
+			var bit_s = (y != h-1 && maze[y+1][x]) ? 4 : 0;
+			var bit_w = (x != 0 && maze[y][x-1]) ? 8 : 0;
+			var value = bit_n | bit_e | bit_s | bit_w;
+			if (y != 0)
+				code += ',';
+			code += value;
+		}
+		code += ']';
+		if (x != w-1)
+			code += ',';
+		code += '\r\n';
+	}
 	code += '  ]\r\n';
 	code += '}';
 	document.getElementById('code_textarea').value = code;
 }
-
 
 
 
