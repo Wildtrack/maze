@@ -1,12 +1,36 @@
-canvas {
-border: solid 1px black;
-background-color: #fff;
-}
 body {
-background-color: #ddd;
+	round-color: #ddd;
 }
 div {
-border: solid 1px black;
-background-color: #fff;
-padding:5px;
+	padding:5px;
+}
+div.panel  {
+	padding: 10px;
+	margin: 5px;
+}
+.container {
+	text-align: center;
+}
+#canvases {
+	position: relative;
+}
+canvas.real  {
+	border: solid 1px black;
+	position:absolute;
+}
+#buttons {
+	padding: 10px;
+	border: solid 1px black;
+	background-color: #fff;
+}
+#info {
+	padding: 10px;
+	border: solid 1px black;
+	background-color: #fff;
+}
+span {
+	border: dotted 1px black;
+	background-color: #fff;
+	padding: 5px;
+	margin: 5px;
 }
