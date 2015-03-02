@@ -85,7 +85,7 @@ function update_maze_code() {
 	code += '  "width":' + w + '\r\n';
 	code += '  "height":' + h + '\r\n';
 	code += '  "start":[' + start_x + ',' + start_y + ']\r\n';
-	code += '  "finish":[' + finish_x + ',' + finish_y + ']\r\n';
+	code += '  "end":[' + finish_x + ',' + finish_y + ']\r\n';
 	code += '  "board":[\r\n';
 	for (x = 0; x < w; x++) {
 		code += '  	[';
