@@ -67,3 +67,7 @@ function update_cell_color(cell) {
 	cell.style.background = maze[cell.tag_y][cell.tag_x] ? '#000000' : 'none';
 	cell.style.color = maze[cell.tag_y][cell.tag_x] ? '#FFFFFF' : '#000000';
 }
+
+function update_maze_code() {
+
+}
