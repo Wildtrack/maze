@@ -72,9 +72,18 @@ function update_cell_color(cell) {
 }
 
 function update_maze_code() {
+	start_x = start_cell == null ? 0 : start_cell.tag_x;
+	start_y = start_cell == null ? 0 : start_cell.tag_y;
+	finish_x = finish_cell == null ? 0 : finish_cell.tag_x;
+	finish_y = finish_cell == null ? 0 : finish_cell.tag_y;
 	code = '{\r\n';
 	code += '  "width":' + w + '\r\n';
 	code += '  "height":' + h + '\r\n';
+	code += '  "start":[' + start_x + ',' + start_y + ']\r\n';
+	code += '  "finish":[' + finish_x + ',' + finish_y + ']\r\n';
+	code += '  "board"[\r\n';
+	
+	code += '  ]\r\n';
 	code += '}';
 	document.getElementById('code_textarea').value = code;
 }
