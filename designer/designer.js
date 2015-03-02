@@ -16,6 +16,9 @@ function set_size() {
 			table_cell = document.createElement('td');
 			table_cell.width = 20;
 			table_cell.height = 20;
+			table_cell.id_x = x;
+			table_cell.id_y = y;
+			table_cell.onclick = cell_click;
 			table_row.appendChild(table_cell);
 		}
 		mtbl.appendChild(table_row);
@@ -24,4 +27,18 @@ function set_size() {
 
 function set_tool(t) {
 	tool = t;
+}
+
+function cell_click() {
+	switch (tool) {
+		case 0:
+		
+			break;
+		case 1:
+		
+			break;
+		case 2:
+			
+			break;
+	}
 }
