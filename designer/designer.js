@@ -92,6 +92,8 @@ function update_maze_code() {
 			var value = bit_n | bit_e | bit_s | bit_w;
 			if (y != 0)
 				code += ',';
+			if (value < 10)
+				code ++ ' ';
 			code += value;
 		}
 		code += ']';
