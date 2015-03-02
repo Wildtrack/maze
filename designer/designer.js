@@ -51,7 +51,14 @@ function cell_click() {
 			}
 			break;
 		case 2:
-			
+			if (finish_cell != null)
+				finish_cell.innerHTML = '';
+			if (finish_cell != this) {
+				finish_cell = this;
+				this.innerHTML = 'F';
+			} else {
+				finish_cell = null;
+			}
 			break;
 	}
 }
