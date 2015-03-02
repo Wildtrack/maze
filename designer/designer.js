@@ -4,6 +4,7 @@ var maze;
 
 var start_cell, finish_cell;
 
+//Gets the size from the input elements, then initializes the designer using them.
 function set_size() {
 	w = document.getElementById('width').value;
 	h = document.getElementById('height').value;
@@ -32,17 +33,19 @@ function set_size() {
 	update_maze_code();
 }
 
+//Changes the action performed by the mouse when clicking on table cells.
 function set_tool(t) {
 	tool = t;
 }
 
+//Performs the corresponding mouse action on a given table cell.
 function cell_click() {
 	switch (tool) {
-		case 0:
+		case 0: //Place Path
 			maze[this.tag_y][this.tag_x] = 1 - maze[this.tag_y][this.tag_x];
 			update_cell_color(this);
 			break;
-		case 1:
+		case 1: //Place Start
 			if (start_cell != null)
 				start_cell.innerHTML = '';
 			if (start_cell != this) {
@@ -52,7 +55,7 @@ function cell_click() {
 				start_cell = null;
 			}
 			break;
-		case 2:
+		case 2: //Place Finish
 			if (finish_cell != null)
 				finish_cell.innerHTML = '';
 			if (finish_cell != this) {
@@ -66,11 +69,13 @@ function cell_click() {
 	update_maze_code();
 }
 
+//Updates background and font color of cell depending on whether it's part of the path.
 function update_cell_color(cell) {
 	cell.style.background = maze[cell.tag_y][cell.tag_x] ? '#000000' : 'none';
 	cell.style.color = maze[cell.tag_y][cell.tag_x] ? '#FFFFFF' : '#000000';
 }
 
+//(Re)generates the JSON code for the maze.
 function update_maze_code() {
 	start_x = start_cell == null ? 0 : start_cell.tag_x;
 	start_y = start_cell == null ? 0 : start_cell.tag_y;
