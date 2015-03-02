@@ -1,3 +1,4 @@
+var w, h;
 var tool = 0;
 var maze;
 
@@ -28,6 +29,7 @@ function set_size() {
 	}
 	
 	start_cell = finish_cell = null;
+	update_maze_code();
 }
 
 function set_tool(t) {
@@ -61,6 +63,7 @@ function cell_click() {
 			}
 			break;
 	}
+	update_maze_code();
 }
 
 function update_cell_color(cell) {
@@ -69,5 +72,37 @@ function update_cell_color(cell) {
 }
 
 function update_maze_code() {
-
+	code = '{\r\n';
+	code += '  "width":' + w + '\r\n';
+	code += '  "height":' + h + '\r\n';
+	code += '}';
+	document.getElementById('code_textarea').value = code;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
