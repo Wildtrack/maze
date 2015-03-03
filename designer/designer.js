@@ -129,10 +129,10 @@ function update_maze_code() {
 	finish_x = finish_cell == null ? 0 : finish_cell.tag_x;
 	finish_y = finish_cell == null ? 0 : finish_cell.tag_y;
 	code = '{\r\n';
-	code += '  "width":' + w + '\r\n';
-	code += '  "height":' + h + '\r\n';
-	code += '  "start":[' + start_x + ',' + start_y + ']\r\n';
-	code += '  "end":[' + finish_x + ',' + finish_y + ']\r\n';
+	code += '  "width":' + w + ',\r\n';
+	code += '  "height":' + h + ',\r\n';
+	code += '  "start":[' + start_x + ',' + start_y + '],\r\n';
+	code += '  "end":[' + finish_x + ',' + finish_y + '],\r\n';
 	code += '  "board":[\r\n';
 	for (x = 0; x < w; x++) {
 		code += '  	[';
