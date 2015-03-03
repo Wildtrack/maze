@@ -72,11 +72,15 @@ function set_tool(t) {
 }
 
 function h_path_cell_click() {
-
+	maze[this.tag_y][this.tag_x] ^= 8;
+	maze[this.tag_y][this.tag_x+1] ^= 2;
+	this.style.background = maze[this.tag_y][this.tag_x] & 8 ? '#000000' : '#CCCCCC';
 }
 
 function v_path_cell_click() {
-
+	maze[this.tag_y][this.tag_x] ^= 4;
+	maze[this.tag_y+1][this.tag_x] ^= 1;
+	this.style.background = maze[this.tag_y][this.tag_x] & 4 ? '#000000' : '#CCCCCC';
 }
 
 //Performs the corresponding mouse action on a given table cell.
