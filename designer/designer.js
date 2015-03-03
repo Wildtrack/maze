@@ -22,11 +22,44 @@ function set_size() {
 			table_cell.height = 30;
 			table_cell.tag_x = x;
 			table_cell.tag_y = y;
-			table_cell.onclick = cell_click;
+			table_cell.onclick = main_cell_click;
 			table_cell.align = 'center';
+			table_cell.style.background = '#000000';
+			table_cell.style.color = '#FFFFFF';
 			table_row.appendChild(table_cell);
+			if (x != w-1) {
+				table_cell2 = document.createElement('td');
+				table_cell2.width = 30;
+				table_cell2.height = 30;
+				table_cell2.tag_x = x;
+				table_cell2.tag_y = y;
+				table_cell2.onclick = h_path_cell_click;
+				table_cell2.style.background = '#CCCCCC';
+				table_row.appendChild(table_cell2);
+			}
 		}
 		mtbl.appendChild(table_row);
+		if (y != h-1) {
+			table_row2 = document.createElement('tr');
+			for (x = 0; x < w; x++) {
+				table_cell = document.createElement('td');
+				table_cell = document.createElement('td');
+				table_cell.width = 30;
+				table_cell.height = 30;
+				table_cell.tag_x = x;
+				table_cell.tag_y = y;
+				table_cell.onclick = v_path_cell_click;
+				table_cell.style.background = '#CCCCCC';
+				table_row2.appendChild(table_cell);
+				if (x != w-1) {
+					table_cell2 = document.createElement('td');
+					table_cell2.width = 30;
+					table_cell2.height = 30;
+					table_row2.appendChild(table_cell2);
+				}
+			}
+			mtbl.appendChild(table_row2);
+		}
 	}
 	
 	start_cell = finish_cell = null;
@@ -38,13 +71,21 @@ function set_tool(t) {
 	tool = t;
 }
 
+function h_path_cell_click() {
+
+}
+
+function v_path_cell_click() {
+
+}
+
 //Performs the corresponding mouse action on a given table cell.
-function cell_click() {
+function main_cell_click() {
 	switch (tool) {
-		case 0: //Place Path
-			maze[this.tag_y][this.tag_x] = 1 - maze[this.tag_y][this.tag_x];
-			update_cell_color(this);
-			break;
+		// case 0: //Place Path
+			// maze[this.tag_y][this.tag_x] = 1 - maze[this.tag_y][this.tag_x];
+			// update_cell_color(this);
+			// break;
 		case 1: //Place Start
 			if (start_cell != null)
 				start_cell.innerHTML = '';
