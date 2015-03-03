@@ -72,9 +72,9 @@ function set_tool(t) {
 }
 
 function h_path_cell_click() {
-	maze[this.tag_y][this.tag_x] ^= 8;
-	maze[this.tag_y][this.tag_x+1] ^= 2;
-	this.style.background = maze[this.tag_y][this.tag_x] & 8 ? '#000000' : '#CCCCCC';
+	maze[this.tag_y][this.tag_x] ^= 2;
+	maze[this.tag_y][this.tag_x+1] ^= 8;
+	this.style.background = maze[this.tag_y][this.tag_x] & 2 ? '#000000' : '#CCCCCC';
 	update_maze_code();
 }
 
