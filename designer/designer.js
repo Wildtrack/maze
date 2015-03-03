@@ -137,16 +137,11 @@ function update_maze_code() {
 	for (x = 0; x < w; x++) {
 		code += '  	[';
 		for (y = 0; y < h; y++) {
-			var bit_n = (y != 0 && maze[y-1][x]) ? 1 : 0;
-			var bit_e = (x != w-1 && maze[y][x+1]) ? 2 : 0;
-			var bit_s = (y != h-1 && maze[y+1][x]) ? 4 : 0;
-			var bit_w = (x != 0 && maze[y][x-1]) ? 8 : 0;
-			var value = bit_n | bit_e | bit_s | bit_w;
 			if (y != 0)
 				code += ',';
-			if (value < 10)
+			if (maze[y][x] < 10)
 				code += ' ';
-			code += value;
+			code += maze[y][x];
 		}
 		code += ']';
 		if (x != w-1)
