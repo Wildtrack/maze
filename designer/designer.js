@@ -58,8 +58,8 @@ function set_size() {
 				//Add BLank Cell if relevant
 				if (x != w-1) {
 					table_cell2 = document.createElement('td');
-					table_cell2.width = 30;
-					table_cell2.height = 30;
+					table_cell2.width = 25;
+					table_cell2.height = 25;
 					table_row2.appendChild(table_cell2);
 				}
 			}
