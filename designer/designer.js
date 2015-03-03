@@ -1,5 +1,5 @@
 var w, h;
-var tool = 0;
+var tool = 1;
 var maze;
 
 var start_cell, finish_cell;
@@ -114,12 +114,6 @@ function main_cell_click() {
 			break;
 	}
 	update_maze_code();
-}
-
-//Updates background and font color of cell depending on whether it's part of the path.
-function update_cell_color(cell) {
-	cell.style.background = maze[cell.tag_y][cell.tag_x] ? '#000000' : 'none';
-	cell.style.color = maze[cell.tag_y][cell.tag_x] ? '#FFFFFF' : '#000000';
 }
 
 //(Re)generates the JSON code for the maze.
