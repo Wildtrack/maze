@@ -15,7 +15,7 @@ currentMaze = -1;  //the order of maze in which they appear in the directory
 //
 mazeDirectory =
 {
-	'small': ['maze1_2x3','maze2_3x3','maze3_10x10'],
+	'small': ['maze1_2x3','maze2_3x3','maze3_10x10','maze4_10x10'],
 	'medium': [],
 	'large': [],
 	'huge': []
@@ -98,12 +98,12 @@ function userData(initTime){
 		    return s;
 		}
 
-        this.getTime = function() {
+        getTime = function() {
                 return ((Date.now() - startTime)/1000);
         }
 
         this.getMinSec = function() {
-        	var totalSeconds = Math.floor(this.getTime());
+        	var totalSeconds = Math.floor(getTime());
   			var minutes = Math.floor(totalSeconds/60);
   			var seconds = totalSeconds - minutes * 60;
   			return this.pad(minutes, 2) + ':' + this.pad(seconds, 2);
