@@ -18,8 +18,8 @@ function set_size() {
 		for (x = 0; x < w; x++) {
 			maze[y][x] = 0;
 			table_cell = document.createElement('td');
-			table_cell.width = 30;
-			table_cell.height = 30;
+			table_cell.width = 25;
+			table_cell.height = 25;
 			table_cell.tag_x = x;
 			table_cell.tag_y = y;
 			table_cell.onclick = main_cell_click;
@@ -29,8 +29,8 @@ function set_size() {
 			table_row.appendChild(table_cell);
 			if (x != w-1) {
 				table_cell2 = document.createElement('td');
-				table_cell2.width = 30;
-				table_cell2.height = 30;
+				table_cell2.width = 25;
+				table_cell2.height = 25;
 				table_cell2.tag_x = x;
 				table_cell2.tag_y = y;
 				table_cell2.onclick = h_path_cell_click;
@@ -44,8 +44,8 @@ function set_size() {
 			for (x = 0; x < w; x++) {
 				table_cell = document.createElement('td');
 				table_cell = document.createElement('td');
-				table_cell.width = 30;
-				table_cell.height = 30;
+				table_cell.width = 25;
+				table_cell.height = 25;
 				table_cell.tag_x = x;
 				table_cell.tag_y = y;
 				table_cell.onclick = v_path_cell_click;
