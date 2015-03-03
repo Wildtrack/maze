@@ -16,6 +16,7 @@ function set_size() {
 		maze[y] = [];
 		table_row = document.createElement('tr');
 		for (x = 0; x < w; x++) {
+			//Add main cell
 			maze[y][x] = 0;
 			table_cell = document.createElement('td');
 			table_cell.width = 25;
@@ -27,6 +28,7 @@ function set_size() {
 			table_cell.style.background = '#000000';
 			table_cell.style.color = '#FFFFFF';
 			table_row.appendChild(table_cell);
+			//Add E/W Path Cell if relevant
 			if (x != w-1) {
 				table_cell2 = document.createElement('td');
 				table_cell2.width = 25;
@@ -39,9 +41,11 @@ function set_size() {
 			}
 		}
 		mtbl.appendChild(table_row);
+		//add N/S row if relevant
 		if (y != h-1) {
 			table_row2 = document.createElement('tr');
 			for (x = 0; x < w; x++) {
+				// Add N/S Path Cell
 				table_cell = document.createElement('td');
 				table_cell = document.createElement('td');
 				table_cell.width = 25;
@@ -51,6 +55,7 @@ function set_size() {
 				table_cell.onclick = v_path_cell_click;
 				table_cell.style.background = '#CCCCCC';
 				table_row2.appendChild(table_cell);
+				//Add BLank Cell if relevant
 				if (x != w-1) {
 					table_cell2 = document.createElement('td');
 					table_cell2.width = 30;
