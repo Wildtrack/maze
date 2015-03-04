@@ -59,12 +59,14 @@ function updateStatus(maze) {
 
 	if (maze.hasPlayerWon()) {
 
+		setTimeout(function() {
 		maze.userData.TimerOff(); //stop the timer
 
 		if (confirm("Congratulations!\nYou have completed this level!\nProceed to next maze?"))
 		{
 			AMaze.model.load(currentMazeFile = getNextMaze(), setGameCanvas);
 		}
+		}, 500);
 	}
 
 	maze.userData.keepStep();
