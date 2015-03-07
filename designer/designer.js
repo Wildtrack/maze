@@ -1,3 +1,8 @@
+if (typeof window === "undefined"){
+	var jsdom = require("jsdom").jsdom;
+	document = jsdom("./index.html");
+}
+
 var w, h;
 var tool = 1;
 var maze;
@@ -152,7 +157,12 @@ function update_maze_code() {
 	document.getElementById('code_textarea').value = code;
 }
 
-
+exports.set_size = set_size;
+exports.update_maze_code = update_maze_code;
+exports.main_cell_click = main_cell_click;
+exports.v_path_cell_click = v_path_cell_click;
+exports.set_tool = set_tool;
+exports.h_path_cell_click = h_path_cell_click;
 
 
 

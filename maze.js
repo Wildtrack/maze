@@ -1,3 +1,6 @@
+if (typeof window === "undefined")
+    var CE = require('canvasengine');
+
 var canvas = CE.defines("canvas_id")
             .extend(Input)
             .ready(function() {

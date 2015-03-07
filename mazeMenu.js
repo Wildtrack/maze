@@ -5,6 +5,11 @@
 //
 // Global parameters & constants
 //
+
+if (typeof window === "undefined")
+    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+
+
 currentMazeFile = '';
 currentLevel = 0; //small, medium, large, huge, etc...
 currentMaze = -1;  //the order of maze in which they appear in the directory
