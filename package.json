@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "test": "npm run mocha && npm run jshint-nocli",
-    "mocha": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u bdd -R spec",
+    "mocha": "./node_modules/.bin/istanbul cover ./node_modules/.bin/_mocha -- -u bdd -R tap",
     "jshint": "./node_modules/.bin/jshint . --reporter node_modules/jshint-html-reporter/reporter.js > report.html ;true",
     "jshint-cli": "./node_modules/.bin/jshint . --reporter node_modules/jshint-stylish/stylish.js ;true",
     "jshint-nocli": "./node_modules/.bin/jshint . ;true"
