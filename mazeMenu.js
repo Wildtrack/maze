@@ -61,7 +61,7 @@ function getNextMaze() {
 // Here parameter maze is the maze object created in setGameCanvas
 //
 function updateStatus(maze) {
-
+    console.log("I AM A CANARY");
 	if (maze.hasPlayerWon()) {
 
 		setTimeout(function() {
