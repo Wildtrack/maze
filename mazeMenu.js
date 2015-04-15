@@ -374,7 +374,7 @@ $(function() {
 	});
 
 	$("#menu_goto").click(function() {
-		console.log("canary button is pressed.");
+		console.log("canary button is  pressed.");
 	});
 
 	$("#menu_level").click(function() {
