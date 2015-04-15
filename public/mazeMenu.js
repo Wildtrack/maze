@@ -1,10 +1,15 @@
 //
-// Amazing mazes menu 
+// Amazing mazes menu
 //
 
 //
 // Global parameters & constants
 //
+
+if (typeof window === "undefined")
+    var $ = require('jquery')(require("jsdom").jsdom().parentWindow);
+
+console.log("I AM A CANARY!!!!!!");
 currentMazeFile = '';
 currentLevel = 0; //small, medium, large, huge, etc...
 currentMaze = -1;  //the order of maze in which they appear in the directory
@@ -15,19 +20,19 @@ currentMaze = -1;  //the order of maze in which they appear in the directory
 //
 mazeDirectory =
 {
-	'small': ['maze1_2x3','maze2_3x3','maze3_10x10'],
+	'small': ['maze1_2x3','maze2_3x3','maze3_10x10','maze4_10x10'],
 	'medium': [],
 	'large': [],
 	'huge': []
 }
 
 //Enter current level and maze number
-//Return the next maze json file 
+//Return the next maze json file
 function getNextMaze() {
 
 	var mazeKeyArray = Object.keys(mazeDirectory);
 	var mazeArray = [];
-	
+
 	while (currentLevel < mazeKeyArray.length) {
 
 		mazeArray = mazeDirectory[mazeKeyArray[currentLevel]];
@@ -52,19 +57,21 @@ function getNextMaze() {
 // 1. update step counts
 // 2. time, maybe?
 // 3. check if player has won
-// 
+//
 // Here parameter maze is the maze object created in setGameCanvas
 //
 function updateStatus(maze) {
-
+    
 	if (maze.hasPlayerWon()) {
-		
+
+		setTimeout(function() {
 		maze.userData.TimerOff(); //stop the timer
 
 		if (confirm("Congratulations!\nYou have completed this level!\nProceed to next maze?"))
 		{
 			AMaze.model.load(currentMazeFile = getNextMaze(), setGameCanvas);
 		}
+		}, 500);
 	}
 
 	maze.userData.keepStep();
@@ -79,7 +86,7 @@ function updateStatus(maze) {
 // maybe others?
 function resetStatus() {
 	$("#dsp_steps").text(0);
-	$("#dsp_time").text("0:0");
+	$("#dsp_time").text("00:00");
 }
 
 // user data per level
@@ -92,6 +99,11 @@ function userData(initTime){
         var minSec;
 
         this.step = 0;
+        this.pad = function(num, size) {
+		    var s = num+"";
+		    while (s.length < size) s = "0" + s;
+		    return s;
+		}
 
         getTime = function() {
                 return ((Date.now() - startTime)/1000);
@@ -101,7 +113,7 @@ function userData(initTime){
         	var totalSeconds = Math.floor(getTime());
   			var minutes = Math.floor(totalSeconds/60);
   			var seconds = totalSeconds - minutes * 60;
-  			return minutes + ':' + seconds;
+  			return this.pad(minutes, 2) + ':' + this.pad(seconds, 2);
         }
 
         this.TimerOff = function() {
@@ -127,7 +139,7 @@ function userData(initTime){
         		counter = 0;
 
         		if (minSec != (minSec = this.getMinSec())) $("#dsp_time").text(minSec); //update index.html
-        		
+
         	}
         	else ++counter;
         }
@@ -155,6 +167,21 @@ function setGameCanvas(loaded) {
 				}
 			},
 			ready: function(stage) {
+
+				var docWidth = $(document).width(), windowHeight = $(window).height(), windowWidth = $(window).width();
+				if(false)
+				{
+
+					$('#bgcanvas')[0].width = docWidth*0.9;
+					$('#bgcanvas')[0].height = windowHeight*0.8;
+
+					$('#canvas_id')[0].width = docWidth*0.9;
+					$('#canvas_id')[0].height = windowHeight*0.8;
+				}
+
+				$('#bgcanvas').css('left', windowWidth/2-$('#bgcanvas')[0].width/2);
+				$('#canvas_id').css('left', windowWidth/2-$('#canvas_id')[0].width/2);
+
 
 				//making the huge spritemap object for the renderer (it's ridiculous)
 				//{
@@ -329,7 +356,7 @@ function setGameCanvas(loaded) {
 };
 
 $(function() {
-	
+
 	currentMazeFile = getNextMaze();
 
 	//not testing the model here, assume it works
@@ -347,19 +374,19 @@ $(function() {
 	});
 
 	$("#menu_goto").click(function() {
-		console.log("goto button is pressed.");
+		console.log("canary button is  pressed.");
 	});
 
 	$("#menu_level").click(function() {
-		console.log("level button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 	$("#menu_save").click(function() {
-		console.log("save button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 	$("#menu_load").click(function() {
-		console.log("load button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 
