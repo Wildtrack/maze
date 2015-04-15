@@ -374,19 +374,19 @@ $(function() {
 	});
 
 	$("#menu_goto").click(function() {
-		console.log("goto button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 	$("#menu_level").click(function() {
-		console.log("level button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 	$("#menu_save").click(function() {
-		console.log("save button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 	$("#menu_load").click(function() {
-		console.log("load button is pressed.");
+		console.log("canary button is pressed.");
 	});
 
 
